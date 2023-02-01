@@ -1,0 +1,38 @@
+{{ block title }}
+    Здесь будет тритмент
+{{ endblock }}
+{{ block content }}
+Your group is in the {{ if player.info }} treatment {{ else }} control {{ endif }} cohort.
+
+<table class="table">
+    <thead>
+    <tr class="table-info">
+        <th></th>
+        <th>Ваше решение</th>
+        <th>Фактическое значение</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr>
+        <td>Медианное значение</td>
+        <td> {{player.median_income}} рублей </td>
+        <td> 31100 рублей </td>
+    </tr>
+     <tr>
+        <td>Средний ежемесячный доход у 10% самых бедных жителей России</td>
+        <td> {{player.poor_10}} рублей </td>
+        <td> 7759 рублей </td>
+    </tr>
+    <tr>
+        <td>Средний ежемесячный доход у 10% самых богатых жителей России</td>
+        <td> {{player.rich_10}} рублей</td>
+        <td> 124 515 рублей </td>
+    </tr>
+    </tbody>
+</table>
+    {{ formfields }}
+
+
+    {{ next_button }}
+
+{{ endblock }}
