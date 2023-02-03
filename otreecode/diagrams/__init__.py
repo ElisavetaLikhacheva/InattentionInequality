@@ -79,6 +79,17 @@ def creating_session(subsession):
         print('set info to', player.info)
 
 
+def participant_income_place(player: Player):
+    true_decile = list([11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466])
+    if player.income <= int(true_decile[0]/1000):
+        player.decile = 1
+    for i in range(0, 9):
+        if player.income > int(true_decile[i]/1000):
+            player.decile = i+2
+        else:
+            break
+    return player.decile
+
 # PAGES
 # class Intro(Page):
 #def creating_session(subsession):
@@ -119,10 +130,11 @@ class IncomeQ(Page):
     def before_next_page(player: Player, timeout_happened):
         participant = player.participant
         participant.income = player.income
-        if player.income < 31:
-            player.decile = 1
-        else:
-            player.decile = 2
+        player.decile = participant_income_place(player)
+        # if player.income < 31:
+        #     player.decile = 1
+        # else:
+        #     player.decile = 2
         participant.decile = player.decile
 
     # @staticmethod
