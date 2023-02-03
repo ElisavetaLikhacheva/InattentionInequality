@@ -2,61 +2,48 @@ from os import environ
 
 
 SESSION_CONFIGS = [
-     dict(
-         name='diag_dictator',
-         display_name='diagrams and dictator',
+    dict(
+         name='diagrams_info_0',
+         display_name='Only diagrams with info=0',
+         app_sequence=['diagrams'],
+         num_demo_participants=2,
+         info=0
+         # use_browser_bots=True
+    ),
+    dict(
+         name='diagrams_info_1',
+         display_name='Only diagrams with info=1',
+         app_sequence=['diagrams'],
+         num_demo_participants=2,
+         info=1
+         # use_browser_bots=True
+    ),
+    dict(
+         name='diagrams_dictator_random',
+         display_name='diagrams and dictator random',
          app_sequence=['diagrams', 'dictator'],
          num_demo_participants=2,
-         distribution=True,
          # use_browser_bots=True
      ),
     dict(
-         name='dictator',
-         display_name='Perceived distrib',
-         app_sequence=['dictator'],
-         num_demo_participants=2,
-         distribution=False
-     ),
-    dict(
-         name='diagrams',
-         display_name='Diagrams',
-         app_sequence=['diagrams'],
-         num_demo_participants=2,
-         use_browser_bots=True
+        name='diagrams_dictator',
+        display_name='diagrams and dictator: info0(, quest0, detection0, rec_pl0)',
+        app_sequence=['diagrams', 'dictator'],
+        num_demo_participants=2,
+        info=1,
+        quest_detection_recipient_place=0,
+        detection_recipient_place=0,
+        recipient_place=0,
+        # use_browser_bots=True
     ),
-    dict(
-         name='slider',
-         display_name='slider',
-         app_sequence=['slider'],
-         num_demo_participants=1
-    ),
-    dict(
-             name='dictator_only',
-             display_name='dictator_only ',
-             app_sequence=['dictator'],
-             num_demo_participants=2,
-             # use_browser_bots=True
-        ),
-    dict(
-             name='dictator_respl',
-             display_name='dictator with revealed respl (T3)',
-             app_sequence=['dictator'],
-             num_demo_participants=2,
-             recipient_place=True
-        ),
+
+
     dict(
              name='questionnaire',
              display_name='questionnaire only',
              app_sequence=['questionnaire'],
              num_demo_participants=1
         ),
-    dict(
-             name='dictator_with_recpl1',
-             display_name='dictator with recpl1',
-             app_sequence=['dictator'],
-             num_demo_participants=2,
-             recipient_place=True
-        )
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

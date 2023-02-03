@@ -61,18 +61,31 @@ class Player(BasePlayer):
         label='Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?',
         min=0, max=100
     )
-
+    income = models.IntegerField(
+        label='Сколько в среднем ежемесячно Вы зарабатываете? (В тысячах рублей)',
+        min=0
+    )
     info = models.BooleanField()
+    decile = models.IntegerField()
+
 
 def creating_session(subsession):
     info = itertools.cycle([False, True, True, True])
     for player in subsession.get_players():
-        player.info = next(info)
+        if 'info' in subsession.session.config:
+            player.info = subsession.session.config['info']
+        else:
+            player.info = next(info)
         print('set info to', player.info)
+
 
 # PAGES
 # class Intro(Page):
-#
+#def creating_session(subsession):
+# session = subsession.session
+# for player in subsession.get_players():
+#   participant = player.participant
+#   participant.treatment = session.config['treatment']
 
 class InfoIncome(Page):
     form_model = 'player'
@@ -95,18 +108,36 @@ class InfoTreatment(Page):
     def is_displayed(player: Player):
         return player.info == 1
 
-class ResultsWaitPage(WaitPage):
-    pass
+# class ResultsWaitPage(WaitPage):
+#     pass
 
+class IncomeQ(Page):
+    form_model = 'player'
+    form_fields = ['income']
 
-class Results(Page):
-    pass
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        participant = player.participant
+        participant.income = player.income
+        if player.income < 31:
+            player.decile = 1
+        else:
+            player.decile = 2
+        participant.decile = player.decile
+
+    # @staticmethod
+    # def is_displayed(player: Player):
+    #     return player.round_number == 1
+
+# class Results(Page):
+#     pass
 
 
 page_sequence = [
     # Intro,
     InfoIncome,
     InfoTreatment,
-    ResultsWaitPage,
-    Results
+    # ResultsWaitPage,
+    IncomeQ,
+    # Results
 ]

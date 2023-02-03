@@ -1,0 +1,21 @@
+{{ block title }}
+    Page title
+{{ endblock }}
+{{ block content }}
+
+{{ if player.group.recipient_place }}
+<div class="card">
+  <div class="card-body">
+    Вы находитесь в {{player.participant.decile}} дециле распределения доходов
+  </div>
+</div>
+
+<div class="alert alert-info">Ваш партнер находится в {{other_player_decile}} дециле распределения доходов</div>
+ {{ endif }}
+
+Вам необходимо определить, сколько из {{C.ENDOWMENT}}, Вы хотите передать игроку Б.
+
+    {{ formfields }}
+    {{ next_button }}
+
+{{ endblock }}

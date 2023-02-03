@@ -1,29 +1,60 @@
 {{ block title }}
-    Пожалуйста, ответьте на вопросы
+
 {{ endblock }}
 {{ block content }}
 
-    {{formfield 'ideal_pyramid'}}
-    {{formfield 'russian_pyramid'}}
-    {{formfield 'median_income'}}
-    {{formfield 'poor_10'}}
-    {{formfield 'rich_10'}}
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">Ниже представлены 5 пирамид, показывающих разные типы общества.
+            Пожалуйста, прочитайте описание каждой пирамиды и ответьте на вопросы.</div>
+        <img src="https://www.dropbox.com/s/1lrpihr7am8qjyb/pyramids.png?raw=1" class="card-img-top">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{formfield 'ideal_pyramid'}}</li>
+            <li class="list-group-item">{{formfield 'russian_pyramid'}}</li>
+        </ul>
+    </div>
 
-<label> Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?
-    <br>
-    <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
-</label>
-<p id="description"></p>
-<!-- by leaving the description blank initially, we prompt the user to move the slider,
-reducing the anchoring/default effect. -->
 
-<script>
-    let description = document.getElementById('description');
-    function updateDescription(input) {
-        let percent_below = parseInt(input.value);
-        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
-    }
-</script>
+</div>
+
+
+
+
+<div class="card">
+    <div class="card-body">
+        <p>Следующие вопросы относятся к средним ежемесячным доходам, которые могут включают:
+            заработную плату, включая доходы от самозанятости; пособия и социальные выплаты; доходы от ренты;
+            дивиденды и проценты от депозитов; роялти.
+        </p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{formfield 'median_income'}}</li>
+            <li class="list-group-item">{{formfield 'poor_10'}}</li>
+            <li class="list-group-item">{{formfield 'rich_10'}}</li>
+            <li class="list-group-item">
+                <label> Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?
+                <br>
+                <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
+                </label>
+                <p id="description"></p>
+                 <!-- by leaving the description blank initially, we prompt the user to move the slider,
+                  reducing the anchoring/default effect. -->
+
+                <script>
+                let description = document.getElementById('description');
+                function updateDescription(input) {
+                    let percent_below = parseInt(input.value);
+                    description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
+                }
+                </script>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
 
     {{ next_button }}
 

@@ -1,24 +1,24 @@
 {{ block title }}
-    Page title
+    Результаты раунда
 {{ endblock }}
 
 {{ block content }}
 
 
-<h3>History of my partners</h3>
-<table class="table">
-    <tr>
-        <th>Round</th>
-        <th>Player</th>
-        <th>contribution</th>
-    </tr>
+<h3></h3>
+<div class="card">
+    <div class="card-header">
+    Раунд {{player.round_number}} из {{C.NUM_ROUNDS}}
+    </div>
 
-    <tr>
-        <td>{{ 00 }}</td>
-        <td>{{ 0 }}</td>
-        <td>{{ 1}}</td>
-    </tr>
-</table>
+    <div class="card-body">
+        <h5 class="card-title">Результаты раунда </h5>
+        <p class="card-text"> Вы были игроком {{player.role}}</p>
+        <p class="card-text">Ваш бонус в этом раунде составил {{player.payoff}}</p>
+    </div>
+</div>
+
+
 
 
     {{ next_button }}
