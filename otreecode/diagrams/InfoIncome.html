@@ -36,10 +36,8 @@
                 <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
                 </label>
                 <p id="description"></p>
-                 <!-- by leaving the description blank initially, we prompt the user to move the slider,
-                  reducing the anchoring/default effect. -->
 
-                <script>
+                <script">
                 let description = document.getElementById('description');
                 function updateDescription(input) {
                     let percent_below = parseInt(input.value);

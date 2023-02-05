@@ -1,10 +1,73 @@
 {{ block title }}
-    Page title
 {{ endblock }}
 
 {{ block content }}
-{{formfields}}
+
+
+
+
+
+<div class="card">
+
+    <div class="card-body">
+        <h3 class="card-title">Заголовок</h3>
+        {{formfield 'inequality_problem'}}
+        {{formfield 'income_increasing'}}
+        {{formfield 'income_deserving'}}
+
+
+        <p>
+        Пожалуйста, выберите один из вариантов для каждого утверждения.
+        <b>Как Вы думаете, насколько важно для достижения высокого места в распределении доходов…</b>
+        </p>
+
+
+        <table class="table">
+            <tr class="table-primary">
+                <th></th>
+                <th>Очень важно</th>
+                <th>Довольно важно</th>
+                <th>Не очень важно</th>
+                <th>Совсем неважно</th>
+            </tr>
+            <tr>
+                <th>{{ form.high_position_family.label }}</th>
+                {{ for choice in form.high_position_family }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.high_position_education.label }}</th>
+                {{ for choice in form.high_position_education }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.high_position_work.label }}</th>
+                {{ for choice in form.high_position_work }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.high_position_networking.label }}</th>
+                {{ for choice in form.high_position_networking }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.high_position_social_elevators.label }}</th>
+                {{ for choice in form.high_position_social_elevators }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+        </table>
+
+        {{formfield 'unemployment_100'}}
+
     {{ next_button }}
+    </div>
+</div>
+
 {{ endblock }}
 
 

@@ -1,0 +1,45 @@
+{{ block title }}
+    Page title
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card">
+    <div class="card-body">
+        <p>
+        Пожалуйста, выберите один из вариантов для каждого утверждения.
+        <b>Как Вы думаете, насколько важно для достижения высокого места в распределении доходов…</b>
+        </p>
+
+
+        <table class="table table-light">
+            <tr class="table-secondary">
+                <th></th>
+                <th>Очень важно</th>
+                <th>Довольно важно</th>
+                <th>Не очень важно</th>
+                <th>Совсем неважно</th>
+            </tr>
+            {{ for field in form }}
+            <tr>
+                <th>{{ field.label }}</th>
+                {{ for option in field }}
+                <td>{{ option }} </td>
+                {{ endfor }}
+            </tr>
+            {{ endfor }}
+        </table>
+    {{ next_button }}
+    </div>
+</div>
+
+<script>
+    for (let option of document.querySelectorAll('input[type=radio]', )) {
+        option.required = 'required';
+    }
+</script>
+
+
+{{ endblock }}
+
+

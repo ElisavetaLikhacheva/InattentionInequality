@@ -70,7 +70,7 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        quest_detect = itertools.cycle([True, False])
+        quest_detect = itertools.cycle([True, False, False])
         players = group.get_players()
         for player in players:
             if player.participant.income != other_player(player).participant.income:
@@ -100,7 +100,6 @@ class Detection(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.group.quest_detection_recipient_place == 1 and player.role() == 'A' and player.participant.info == 1
-#TODO инфо=1(?)
 
 class WP3(WaitPage):
     @staticmethod
@@ -153,7 +152,6 @@ class MainDictatorDecision(Page):
         other_player_decile = int(other_player(player).participant.decile)
         return dict(other_player_income=other_player_income,
                     other_player_decile=other_player_decile)
-# TODO здесь чтоже что-то с доходом и децилями
 
 class ResultsWaitPage(WaitPage):
     after_all_players_arrive = 'set_payoffs'
