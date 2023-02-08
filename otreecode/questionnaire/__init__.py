@@ -7,7 +7,6 @@ Your app description
 """
 
 
-
 class C(BaseConstants):
     NAME_IN_URL = 'questionnaire'
     PLAYERS_PER_GROUP = None
@@ -27,6 +26,7 @@ class C(BaseConstants):
         [6, 'Бакалавриат'],
         [7, 'Cпециалитет, магистратура'],
         [8, 'Аспирантура'],
+        [9, 'Нет'],
     ]
     Q_MARRIAGE = [
         [1, 'Никогда не состоял(a)'],
@@ -68,13 +68,71 @@ class C(BaseConstants):
     ]
     Q_PARTY = [
         [1, 'Единая Россия'],
-        [2, 'Коммунистическая партия Российской Федерации'],
-        [3, 'Справедливая Россия — За правду'],
-        [4, 'Либерально-демократическая партия России'],
+        [2, 'Коммунистическая партия Российской Федерации (КПРФ)'],
+        [3, 'Справедливая Россия — За правду (СРЗП)'],
+        [4, 'Либерально-демократическая партия России (ЛДПР)'],
         [5, 'Новые люди'],
-        [6, 'Другая зарегестрированная партия'],
-        [7, 'Нет партии, которая могла бы представлять мои интересы'],
+        [6, 'Российская объединённая демократическая партия «Яблоко»'],
+        [7, 'Другая зарегистрированная партия'],
+        [8, 'Нет партии, которая могла бы представлять мои интересы'],
+        [9, 'Я не интересуюсь политикой'],
     ]
+    Q_PLACE_LIVING = [
+        [1, 'Крупный город (население больше 1 миллиона человек)'],
+        [2, 'Город с населением от 250 тысяч человек до миллиона'],
+        [3, 'Небольшой город с населением до 250 тысяч человек'],
+        [4, 'Город с населением от 50 до 250 тысяч человек'],
+        [5, 'Населенный пункт до 50 тысяч человек'],
+    ]
+    Q_OCCUPATION = [
+        [1, 'Государственная служба'],
+        [2, 'Частный сектор'],
+        [3, 'Собственный бизнес или самозанятость'],
+        [4, 'Некоммерческий сектор'],
+        [5, 'Студент'],
+        [6, 'Безработный'],
+        [7, 'Выбыл(а) из состава рабочей силы (выход на пенсию, отпуск по уходу за ребенком)'],
+    ]
+    Q_CHARITY = [
+        [1, 'Нет'],
+        [2, 'Да, жертвовал(а) деньги на благотворительность'],
+        [3, 'Да, участвовал(а) в качестве волонтера'],
+        [4, 'Да, жертвовал(а) деньги и участвовал(а) волонтером']
+    ]
+    Q_FINANCIAL_CONDITIONS = [
+        [1, 'Денег не хватает даже на питание'],
+        [2, 'На питание денег хватает, но не хватает на покупку одежды и обуви'],
+        [3, 'На покупку одежды и обуви денег хватает, но не хватает на покупку мелкой бытовой техники'],
+        [4, 'На покупку мелкой бытовой техники денег хватает, но не хватает на покупку крупной бытовой техники'],
+        [5, 'Денег хватает на покупку крупной бытовой техники, но мы не сможем купить новую машину'],
+        [6, 'На новую машину денег хватает, но мы не можем купить небольшую квартиру'],
+        [7, 'На небольшую квартиру денег хватает, но мы не смогли бы купить большую квартиру в хорошем районе'],
+        [8, 'Материальных затруднений не испытываем, при необходимости могли бы приобрести квартиру, дом'],
+        [9, 'Затрудняюсь ответить'],
+    ]
+    Q_RELIGION = [
+        [1, 'Католицизм'],
+        [2, 'Протестантизм'],
+        [3, 'Православие'],
+        [4, 'Иудаизм'],
+        [5, 'Ислам'],
+        [6, 'Буддизм'],
+        [7, 'Другую религию'],
+        [8, 'Не исповедую никакой религии (атеист)']
+    ]
+    Q_BIG5 = [
+        [1, 'Полностью согласен'],
+        [2, 'Скорее согласен'],
+        [3, 'Затрудняюсь ответить'],
+        [4, 'Скорее не согласен'],
+        [5, 'Полностью не согласен']
+    ]
+    Q_BENEFITS = [
+        [1, 'Проигрываю'],
+        [2, 'Безразлично'],
+        [3, 'Выигрываю']
+    ]
+
 
 class Subsession(BaseSubsession):
     pass
@@ -83,10 +141,17 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 
+
 def high_position(label):
     return models.IntegerField(label=label, choices=C.Q_4_IMPORTANT, widget=widgets.RadioSelect)
+
+
 def scale(label):
     return models.IntegerField(label=label, choices=range(1, 11), widget=widgets.RadioSelectHorizontal)
+
+
+def big5(label):
+    return models.IntegerField(label=label, choices=C.Q_BIG5, widget=widgets.RadioSelect)
 
 
 class Player(BasePlayer):
@@ -119,13 +184,13 @@ class Player(BasePlayer):
         min=0
     )
 
-    #q related to inequality
+    # q related to inequality
     inequality_problem = models.StringField(
         label='Как Вы думаете, неравенство — серьезная проблема в России?',
         choices=C.Q_INEQUALITY_PROBLEM,
         widget=widgets.RadioSelect
     )
-    income_increasing = models.StringField(
+    income_inequality_increasing = models.StringField(
         label='Как Вы думаете, неравенство доходов возросло или снизилось в последние годы в России?',
         choices=C.Q_INCOME_INCREASING,
         widget=widgets.RadioSelect
@@ -140,6 +205,16 @@ class Player(BasePlayer):
         choices=C.Q_4_YES_NO,
         widget=widgets.RadioSelectHorizontal
     )
+    income_comp_parents = models.StringField(
+        label='По сравнению с уровнем жизни Ваших родителей, когда они были в Вашем возрасте, '
+              'Вы живете сейчас лучше, хуже или примерно также?',
+        choices=[
+            [1, 'Лучше'],
+            [1, 'Хуже'],
+            [1, 'Примерно также'],
+        ],
+        widget=widgets.RadioSelectHorizontal
+    )
     unemployment_100 = models.IntegerField(
         label='Как Вы думаете, сколько человек из каждых 100 людей на данный момент не имеет работы и ищет её?',
         min=0,
@@ -150,11 +225,41 @@ class Player(BasePlayer):
     high_position_networking = high_position('знать нужных людей?')
     high_position_social_elevators = high_position('иметь в стране развитые социальные лифты?')
 
-    #political preferences
+    # economic redistribution
+    redistr_changes = models.StringField(
+        label='Хотели бы Вы изменить систему перераспределения в России?',
+        choices=[
+            [1, 'Уменьшить перераспределение'],
+            [2, 'Оставить без изменений'],
+            [3, 'Увеличить перераспределение']
+        ],
+        widget=widgets.RadioSelect
+    )
+    redistr_benefits_now = models.StringField(
+        label='В этом году',
+        choices=C.Q_BENEFITS,
+        widget=widgets.RadioSelect
+    )
+    redistr_benefits_life = models.StringField(
+        label='В течение жизни',
+        choices=C.Q_BENEFITS,
+        widget=widgets.RadioSelect
+    )
+    redistr_tax_rate = models.StringField(
+        label='Хотели бы вы изменить налоговую ставку в России?',
+        choices=[
+            [1, 'Уменьшить налоговую ставку'],
+            [2, 'Оставить без изменений'],
+            [3, 'Увеличить налоговую ставку']
+        ],
+        widget=widgets.RadioSelect
+    )
+
+    # political preferences
     general_trust = models.IntegerField(
         label='Могли бы Вы сказать, что в целом людям стоит доверять или нужно быть осторожным?',
         choices=C.Q_TRUST,
-        widget=widgets.RadioSelect,
+        widget=widgets.RadioSelect
     )
     trust_country = scale('Государству в целом')
     trust_political_parties = scale('Политическим партиям')
@@ -165,9 +270,11 @@ class Player(BasePlayer):
 
     social_mobility = scale('Как Вы считаете, насколько хорошо работают социальные лифты в России?')
     politics_interest = scale('Можете ли Вы описать себя как человека, который интересуется политикой? ')
+
     effort_luck = scale('')
     responsibility = scale('')
     income_equality = scale('')
+    competition = scale('')
     left_right = scale('')
 
     party_vote = models.StringField(
@@ -175,6 +282,7 @@ class Player(BasePlayer):
         choices=C.Q_PARTY,
         widget=widgets.RadioSelect
     )
+    corruption = scale('В какую точку Вы поместили бы Россию на этой шкале?')
 
     democracy_redistribution = scale('Правительство берет налоги с богатых для поддержки бедных')
     democracy_elections = scale('Люди выбирают политических лидеров на свободных выборах')
@@ -186,9 +294,76 @@ class Player(BasePlayer):
     important_democracy = scale('Насколько для Вас важно жить в демократической стране?')
     Russia_democracy = scale('Как Вы считаете, насколько демократично управляется Россия в настоящее время?')
 
+    # background
+    mother_education = models.StringField(
+        label='Пожалуйста, укажите наивысшую оконченную ступень образования Вашей матери.',
+        choices=C.Q_EDUCATION,
+        widget=widgets.RadioSelect
+    )
+    father_education = models.StringField(
+        label='Пожалуйста, укажите наивысшую оконченную ступень образования Вашего отца.',
+        choices=C.Q_EDUCATION,
+        widget=widgets.RadioSelect
+    )
+    place_living_now = models.StringField(
+        label='Какая из указанных категорий лучше всего описывает место, где Вы сейчас проживаете?',
+        choices=C.Q_PLACE_LIVING,
+        widget=widgets.RadioSelect
+    )
+    place_living_sensible_years = models.StringField(
+        label='Какая из указанных категорий лучше всего описывает место, где Вы проживали в возрасте 16-20 лет?',
+        choices=C.Q_PLACE_LIVING,
+        widget=widgets.RadioSelect
+    )
+    occupation = models.StringField(
+        label='Пожалуйста, укажите сферу Вашей деятельности.',
+        choices=C.Q_OCCUPATION,
+        widget=widgets.RadioSelect
+    )
+    charity = models.StringField(
+        label='Жертвовали ли Вы за последний год деньги на благотворительность '
+              'или участвовали волонтером в некоммерческих организациях?',
+        choices=C.Q_CHARITY,
+        widget=widgets.RadioSelect
+    )
+    financial_conditions = models.StringField(
+        label='Пожалуйста, выберите утверждение, которое наиболее точно описывает Ваше финансовое положение.',
+        choices=C.Q_FINANCIAL_CONDITIONS,
+        widget=widgets.RadioSelect
+    )
+    # big5
+    big5_1 = big5(label='сдержанный человек')
+    big5_2 = big5(label='в целом доверчивый человек')
+    big5_3 = big5(label='склонны к лени')
+    big5_4 = big5(label='расслаблены и способны справляться со стрессом')
+    big5_5 = big5(label='имеете немного интересов')
+    big5_6 = big5(label='общительны')
+    big5_7 = big5(label='склонны выискивать чужие ошибки')
+    big5_8 = big5(label='тщательно выполняете работу')
+    big5_9 = big5(label='легко нервничаете')
+    big5_10 = big5(label='имеете богатое воображение')
+
+    #just
+    just_allowance = scale('Получение государственных пособий, на которые человек не имеет права ')
+    just_freeride = scale('Проезд без оплаты в общественном транспорте')
+    just_thieving = scale('Кража чужой собственности')
+    just_tax_evasion = scale('Неуплата налогов, если есть такая возможность')
+    just_bribe = scale('Получение взятки, используя служебное положение')
+    just_violence = scale('Насилие против других людей ')
+    just_political_violence = scale('Использование насилия в политической борьбе ')
+
+    # personal
+    freedom_choice = scale('')
+    life_satisfaction = scale('')
+    finance_satisfaction = scale('')
+
+
+
 
 def children_live_max(player):
     return player.children
+
+
 # PAGES
 class Demographics(Page):
     form_model = 'player'
@@ -204,16 +379,39 @@ class Demographics(Page):
 class InequalityAssessment(Page):
     form_model = 'player'
     form_fields = ['inequality_problem',
-                   'income_increasing',
+                   'income_inequality_increasing',
                    'income_satisfactory',
                    'income_deserving',
+                   'income_comp_parents',
                    'unemployment_100',
+
                    'high_position_family',
                    'high_position_education',
                    'high_position_work',
                    'high_position_networking',
                    'high_position_social_elevators',
                    ]
+    # @staticmethod
+    # def vars_for_template(player: Player):
+    #     high_position = ['high_position_family',
+    #                      'high_position_education',
+    #                      'high_position_work',
+    #                      'high_position_networking',
+    #                      'high_position_social_elevators'
+    #                      ]
+    #
+    #     return dict(high_position=high_position)
+
+
+class Redistribution(Page):
+    form_model = 'player'
+    form_fields = [
+        'redistr_changes',
+        'redistr_benefits_now',
+        'redistr_benefits_life',
+        'redistr_tax_rate'
+    ]
+
 
 class PoliticalPreferences(Page):
     form_model = 'player'
@@ -225,13 +423,17 @@ class PoliticalPreferences(Page):
         'trust_courts',
         'trust_television',
         'trust_mass_media',
+
         'social_mobility',
         'politics_interest',
+
         'effort_luck',
         'responsibility',
         'income_equality',
+        'competition',
         'left_right',
         'party_vote',
+        'corruption',
 
         'democracy_redistribution',
         'democracy_elections',
@@ -244,8 +446,51 @@ class PoliticalPreferences(Page):
         'Russia_democracy',
     ]
 
-class BackgroundInfo(Page):
+
+class Big5(Page):
+    form_model = 'player'
+    form_fields = ['big5_1',
+                   'big5_2',
+                   'big5_3',
+                   'big5_4',
+                   'big5_5',
+                   'big5_6',
+                   'big5_7',
+                   'big5_8',
+                   'big5_9',
+                   'big5_10',
+
+                   'just_allowance',
+                   'just_freeride',
+                   'just_thieving',
+                   'just_tax_evasion',
+                   'just_bribe',
+                   'just_violence',
+                   'just_political_violence',
+                   'freedom_choice',
+                   'life_satisfaction',
+                   'finance_satisfaction'
+                   ]
+
+
+#TODO: вычисление big5
+
+class Risk(Page):
     pass
+
+
+class BackgroundInfo(Page):
+    form_model = 'player'
+    form_fields = [
+        'mother_education',
+        'father_education',
+        'place_living_now',
+        'place_living_sensible_years',
+        'occupation',
+        'charity',
+        'financial_conditions',
+    ]
+
 
 class Results(Page):
     pass
@@ -255,7 +500,10 @@ page_sequence = [
     # Intro,
     Demographics,
     InequalityAssessment,
+    Redistribution,
     PoliticalPreferences,
+    Big5,
+    # Risk,
     BackgroundInfo,
     # HighPosition,
 

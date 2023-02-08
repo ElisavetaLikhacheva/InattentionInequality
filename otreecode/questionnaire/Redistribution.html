@@ -1,0 +1,56 @@
+{{ block title }}
+{{ endblock }}
+
+{{ block content }}
+
+
+
+
+
+<div class="card">
+
+    <div class="card-body">
+        <h3 class="card-title"></h3>
+        <div class="card-text"> </div>
+
+        {{formfield 'redistr_changes'}}
+
+
+
+
+
+        <p>
+        Пожалуйста, выберите один из вариантов для каждого утверждения.
+        <b>Как Вы думаете, Вы выигрываете или проигрываете от системы перераспределения?</b>
+        </p>
+
+        <table class="table">
+            <tr class="table-primary">
+                <th></th>
+                <th>Проигрываю</th>
+                <th>Безразлично</th>
+                <th>Выигрываю</th>
+            </tr>
+            <tr>
+                <th>{{ form.redistr_benefits_now.label }}</th>
+                {{ for choice in form.redistr_benefits_now }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.redistr_benefits_life.label }}</th>
+                {{ for choice in form.redistr_benefits_life }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+        </table>
+
+        {{formfield 'redistr_tax_rate'}}
+
+    {{ next_button }}
+    </div>
+</div>
+
+{{ endblock }}
+
+

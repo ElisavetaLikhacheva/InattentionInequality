@@ -1,0 +1,186 @@
+{{ block title }}
+    Personal traitts
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card">
+    <div class="card-body">
+
+        <table class="table">
+            <tr class="table-primary">
+                <th></th>
+                <th>Полностью согласен</th>
+                <th>Скорее согласен</th>
+                <th>Затрудняюсь ответить</th>
+                <th>Скорее не согласен</th>
+                <th>Полностью не согласен</th>
+            </tr>
+            <tr>
+                <th>{{ form.big5_1.label }}</th>
+                {{ for choice in form.big5_1 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_2.label }}</th>
+                {{ for choice in form.big5_2 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_3.label }}</th>
+                {{ for choice in form.big5_3 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_4.label }}</th>
+                {{ for choice in form.big5_4 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_5.label }}</th>
+                {{ for choice in form.big5_5 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_6.label }}</th>
+                {{ for choice in form.big5_6 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_7.label }}</th>
+                {{ for choice in form.big5_7 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_8.label }}</th>
+                {{ for choice in form.big5_8 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_9.label }}</th>
+                {{ for choice in form.big5_9 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.big5_10.label }}</th>
+                {{ for choice in form.big5_10 }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+        </table>
+
+        <p>Теперь Вам необходимо определить,
+            в какой степени каждое из действий ниже, на Ваш взгляд, может быть оправдано? «10» означает, что оно может быть
+            оправдано всегда, а «1» - никогда не может быть оправдано. Вы также можете выбрать любую цифру между
+            этими оценками. Итак, может ли, по Вашему мнению, быть оправдано и в какой степени?</p>
+        <table class="table">
+            <tr class="table-primary">
+                <th></th>
+                {{for i in range(1, 11)}}
+                <th>{{i}}</th>
+                {{endfor}}
+            </tr>
+            <tr>
+                <th>{{ form.just_allowance.label }}</th>
+                {{ for choice in form.just_allowance }}
+                <td>{{ choice }} </td>
+                {{endfor}}
+            </tr>
+            <tr>
+                <th>{{ form.just_freeride.label }}</th>
+                {{ for choice in form.just_freeride }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.just_thieving.label }}</th>
+                {{ for choice in form.just_thieving }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.just_tax_evasion.label }}</th>
+                {{ for choice in form.just_tax_evasion }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.just_bribe.label }}</th>
+                {{ for choice in form.just_bribe }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.just_violence.label }}</th>
+                {{ for choice in form.just_violence}}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+            <tr>
+                <th>{{ form.just_political_violence.label }}</th>
+                {{ for choice in form.just_political_violence }}
+                <td>{{ choice }} </td>
+                {{ endfor }}
+            </tr>
+        </table>
+
+        <p>Некоторые люди полагают, что они совершенно свободны в выборе и сами определяют свою жизнь,
+            другие же считают, что они никак реально не влияют на то, что с ними происходит. Используя эту шкалу,
+            оцените, пожалуйста, в какой степени, как Вам кажется, Вы влияете на ход своей жизни.
+        </p>
+        <table class="table">
+                <td>Совсем не влияю</td>
+                {{ for choice in form.freedom_choice }}
+                <td>{{ choice }} <p>{{choice.label}}</p></td>
+                {{endfor}}
+                <td>Сильно влияю</td>
+            </tr>
+        </table>
+
+        <p>Принимая во внимание все стороны жизни, насколько Вы удовлетворены своей жизнью в целом в настоящее время?
+            Дайте ответ от 1 до 10, где 1 означает, что "Совершенно не удовлетворен(на)",
+            а 10 — "Полностью удовлетворен(на)".</p>
+        <table class="table">
+                <td>Совершенно не удовлетворен(на)</td>
+                {{ for choice in form.life_satisfaction }}
+                <td>{{ choice }} <p>{{choice.label}}</p></td>
+                {{endfor}}
+                <td>Полностью удовлетворен(на)</td>
+            </tr>
+        </table>
+
+        <p>Насколько Вы удовлетворены финансовым положением Вашей семьи?
+            Дайте ответ от 1 до 10, где 1 означает, что "Совершенно не удовлетворен(на)",
+            а 10 — "Полностью удовлетворен(на)".</p>
+        <table class="table">
+                <td>Совершенно не удовлетворен(на)</td>
+                {{ for choice in form.finance_satisfaction }}
+                <td>{{ choice }} <p>{{choice.label}}</p></td>
+                {{endfor}}
+                <td>Полностью удовлетворен(на)</td>
+            </tr>
+        </table>
+
+
+    {{ next_button }}
+    </div>
+</div>
+
+
+{{endblock}}
+
+
+
+
+
+
+
