@@ -1,8 +1,9 @@
 {{ block title }}
-    Результаты раунда
+Этап 2. Результаты раунда {{player.round_number}} из {{C.NUM_ROUNDS}}
 {{ endblock }}
 
 {{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 
 <h3></h3>
@@ -12,9 +13,8 @@
     </div>
 
     <div class="card-body">
-        <h5 class="card-title">Результаты раунда </h5>
-        <p class="card-text"> Вы были игроком {{player.role}}</p>
-        <p class="card-text">Ваш бонус в этом раунде составил {{player.payoff}}</p>
+        <p class="card-text"> В этом раунде Вы были игроком {{player.role}}</p>
+        <p class="card-text">Ваш бонус составил {{player.payoff}}</p>
     </div>
 </div>
 

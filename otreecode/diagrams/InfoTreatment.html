@@ -1,38 +1,91 @@
 {{ block title }}
-    Здесь будет тритмент
+    Здесь Вы можете посмотреть, как устроено распределение доходов в России сегодня
 {{ endblock }}
 {{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
-<table class="table">
-    <thead>
-    <tr class="table-info">
-        <th></th>
-        <th>Ваше решение</th>
-        <th>Фактическое значение</th>
-    </tr>
-    </thead>
+<script>
+    let description = document.getElementById('description');
+    function updateDescription(input) {
+        let percent_below = parseInt(input.value);
+        description.innerText = `Ваш доход соответствует ${decile} децилю.`
+    }
+</script>
 
-    <tbody class="table-group-divider">
-    <tr>
-        <td>Медианное значение</td>
-        <td> {{player.median_income}} рублей </td>
-        <td> 31100 рублей </td>
-    </tr>
-     <tr>
-        <td>Средний ежемесячный доход у 10% самых бедных жителей России</td>
-        <td> {{player.poor_10}} рублей </td>
-        <td> 7759 рублей </td>
-    </tr>
-    <tr>
-        <td>Средний ежемесячный доход у 10% самых богатых жителей России</td>
-        <td> {{player.rich_10}} рублей</td>
-        <td> 124 515 рублей </td>
-    </tr>
-    </tbody>
-</table>
-    {{ formfields }}
+<script>
+    $(document).ready(function(){$('[data-toggle="popover"]').popover({ trigger: "hover" });});
+</script>
 
 
-    {{ next_button }}
+<div class="card ">
+    <div class="card-body">
+
+        <p id="description"></p>
+        <h4>Ваш ежемесячный доход: {{player.income}} 000 рублей. </h4>
+        <p style="text-align: center">Вы находитесь в {{player.decile}} дециле распределения.
+            Это значит, что {{people_poorer}}% людей беднее, чем Вы.</p>
+        <p></p>
+
+
+        <div class="common">
+            {{for i in decile_below}}
+            <div class="bar lower" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
+                 data-bs-content="Это {{i}} дециль."></div>
+            {{endfor}}
+            <div class="bar in" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
+                 data-bs-title="Вы здесь!"
+                 data-bs-custom-class="custom-popover"
+                 data-bs-content="Ваш доход соответствует {{player.decile}} децилю."></div>
+            {{for i in decile_higher}}
+            <div class="bar higher" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
+                 data-bs-content="Это {{i}} дециль."></div>
+            {{endfor}}
+        </div>
+
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+
+        <p class="p_indent">Вы можете увидеть ответы, которые Вы указали ранее и фактические значения медианного дохода,
+            среднего ежемесячного дохода 10% самых бедных и самых богатых людей, Ваше место в распределении
+            доходов России сегодня.</p>
+
+        <table class="table">
+            <thead>
+            <tr class="table-info">
+                <th></th>
+                <th>Ваше решение</th>
+                <th>Фактическое значение</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr>
+                <td>Медианное значение</td>
+                <td> {{player.median_income}} рублей </td>
+                <td> 31100 рублей </td>
+            </tr>
+             <tr>
+                <td>Средний ежемесячный доход у 10% самых бедных жителей России</td>
+                <td> {{player.poor_10}} рублей </td>
+                <td> 7759 рублей </td>
+            </tr>
+            <tr>
+                <td>Средний ежемесячный доход у 10% самых богатых жителей России</td>
+                <td> {{player.rich_10}} рублей</td>
+                <td> 124 515 рублей </td>
+            </tr>
+            <tr>
+                <td> Процент людей, который зарабатывают меньше, чем Вы</td>
+                <td> {{player.percent_below}}%</td>
+                <td> {{people_poorer}}% </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{{ next_button }}
 
 {{ endblock }}

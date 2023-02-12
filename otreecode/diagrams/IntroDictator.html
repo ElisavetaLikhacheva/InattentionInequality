@@ -1,0 +1,36 @@
+{{ block title }}
+{{if player.round_number == 1}} Поздравляем! Вы завершили 1 этап. {{else}} {{endif}}
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+
+        {{if player.round_number == 1}}
+        <div class="card-header"> Инструкция к этапу 2 </div>
+        <div class="card-body">
+        <p> Сейчас Вы будете объединены в пару с одним из участников случайным образом.</p>
+        <p> Игроку с ролью "А"...
+            Роли распределятся случайным образом
+        </p>
+
+
+
+
+        {{else}}
+        <div class="card-body">
+        <p>
+            Сейчас Вам предстоит сыграть второй раунд. Здесь также...
+        </p>
+        {{endif}}
+    </div>
+</div>
+
+
+
+
+    {{ next_button }}
+{{ endblock }}
+
+

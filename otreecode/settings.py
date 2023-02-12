@@ -7,7 +7,7 @@ SESSION_CONFIGS = [
          display_name='Only diagrams with info=0',
          app_sequence=['diagrams'],
          num_demo_participants=2,
-         info=0
+         info=0,
          # use_browser_bots=True
     ),
     dict(
@@ -15,7 +15,7 @@ SESSION_CONFIGS = [
          display_name='Only diagrams with info=1',
          app_sequence=['diagrams'],
          num_demo_participants=2,
-         info=1
+         info=1,
          # use_browser_bots=True
     ),
     dict(
@@ -36,13 +36,18 @@ SESSION_CONFIGS = [
         recipient_place=0,
         # use_browser_bots=True
     ),
-
-
     dict(
-             name='questionnaire',
-             display_name='questionnaire only',
-             app_sequence=['questionnaire'],
-             num_demo_participants=1
+        name='full',
+        display_name='diagrams, dictator, questionnaire random',
+        app_sequence=['diagrams', 'dictator', 'questionnaire'],
+        num_demo_participants=2,
+        # use_browser_bots=True
+    ),
+    dict(
+         name='questionnaire',
+         display_name='questionnaire only',
+         app_sequence=['questionnaire'],
+         num_demo_participants=1
         ),
 ]
 

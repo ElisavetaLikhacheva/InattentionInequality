@@ -12,11 +12,13 @@ class PlayerBot(Bot):
                                median_income=random.randint(0, 100),
                                poor_10=random.randint(0, 100),
                                rich_10=random.randint(0, 100),
-                               percent_below=random.randint(0, 100))
+                               percent_below=random.randint(0, 100),
+                               income=random.randint(0, 120)
+                               )
 
         if self.player.info == 1:
             yield InfoTreatment,
-        yield Results
+        # yield IncomeQ, dict(income=random.randint(1, 150))
 
 
         # yield Detection, dict(detection_recipient_place=random.choice([True, False]))

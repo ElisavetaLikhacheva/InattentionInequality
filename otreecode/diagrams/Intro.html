@@ -1,8 +1,16 @@
 {{ block title }}
-    It's an introduction!
+Добрый день!
 {{ endblock }}
-{{ block content }}
 
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+    <div class="card-body">
+        <p>Вам предлагается поучаствовать в исследовании, состоящем из 3 этапов.
+            В рамках каждого из них Вам нужно ответить на некоторые вопросы. </p>
+    </div>
+</div>
 
     {{ next_button }}
 

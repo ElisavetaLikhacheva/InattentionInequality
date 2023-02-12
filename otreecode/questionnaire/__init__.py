@@ -15,7 +15,6 @@ class C(BaseConstants):
     Q_GENDER = [
         [1, 'Мужской'],
         [2, 'Женский'],
-        [3, 'Другой'],
     ]
     Q_EDUCATION = [
         [1, 'Начальное общее образование (4 класса)'],
@@ -166,12 +165,12 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal
     )
     education = models.StringField(
-        label='Пожалуйста, укажите наивысшую оконченную ступень образования.',
+        label='Укажите наивысшую оконченную ступень образования, по которой Вы имеете диплом.',
         choices=C.Q_EDUCATION,
         widget=widgets.RadioSelect
     )
     marriage = models.StringField(
-        label='Пожалуйста, укажите Ваш брачный статус',
+        label='Вы состоите в браке?',
         choices=C.Q_MARRIAGE,
         widget=widgets.RadioSelect
     )
@@ -191,7 +190,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
     income_inequality_increasing = models.StringField(
-        label='Как Вы думаете, неравенство доходов возросло или снизилось в последние годы в России?',
+        label='Как Вы считаете, неравенство доходов возросло или снизилось в последние годы в России?',
         choices=C.Q_INCOME_INCREASING,
         widget=widgets.RadioSelect
     )
@@ -210,8 +209,8 @@ class Player(BasePlayer):
               'Вы живете сейчас лучше, хуже или примерно также?',
         choices=[
             [1, 'Лучше'],
-            [1, 'Хуже'],
-            [1, 'Примерно также'],
+            [2, 'Хуже'],
+            [3, 'Примерно также'],
         ],
         widget=widgets.RadioSelectHorizontal
     )
@@ -219,6 +218,7 @@ class Player(BasePlayer):
         label='Как Вы думаете, сколько человек из каждых 100 людей на данный момент не имеет работы и ищет её?',
         min=0,
         max=100)
+
     high_position_family = high_position('родиться в обеспеченной семье?')
     high_position_education = high_position('получить хорошее образование?')
     high_position_work = high_position('упорно работать?')
@@ -295,6 +295,11 @@ class Player(BasePlayer):
     Russia_democracy = scale('Как Вы считаете, насколько демократично управляется Россия в настоящее время?')
 
     # background
+    religion = models.StringField(
+        label='Какую религию Вы исповедуете?',
+        choices=C.Q_RELIGION,
+        widget=widgets.RadioSelect
+    )
     mother_education = models.StringField(
         label='Пожалуйста, укажите наивысшую оконченную ступень образования Вашей матери.',
         choices=C.Q_EDUCATION,
@@ -343,7 +348,13 @@ class Player(BasePlayer):
     big5_9 = big5(label='легко нервничаете')
     big5_10 = big5(label='имеете богатое воображение')
 
-    #just
+    big5_extraversion = models.FloatField()
+    big5_agreeableness = models.FloatField()
+    big5_conscientiousness = models.FloatField()
+    big5_neuroticism = models.FloatField()
+    big5_openness = models.FloatField()
+
+    # just
     just_allowance = scale('Получение государственных пособий, на которые человек не имеет права ')
     just_freeride = scale('Проезд без оплаты в общественном транспорте')
     just_thieving = scale('Кража чужой собственности')
@@ -358,10 +369,12 @@ class Player(BasePlayer):
     finance_satisfaction = scale('')
 
 
-
-
 def children_live_max(player):
     return player.children
+
+
+def big5_calculation(first, second):
+    return 3 + (first - second) / 2
 
 
 # PAGES
@@ -472,8 +485,14 @@ class Big5(Page):
                    'finance_satisfaction'
                    ]
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.big5_extraversion = big5_calculation(player.big5_6, player.big5_1)
+        player.big5_agreeableness = big5_calculation(player.big5_2, player.big5_7)
+        player.big5_conscientiousness = big5_calculation(player.big5_8, player.big5_3)
+        player.big5_neuroticism = big5_calculation(player.big5_9, player.big5_4)
+        player.big5_openness = big5_calculation(player.big5_10, player.big5_5)
 
-#TODO: вычисление big5
 
 class Risk(Page):
     pass
@@ -482,6 +501,7 @@ class Risk(Page):
 class BackgroundInfo(Page):
     form_model = 'player'
     form_fields = [
+        'religion',
         'mother_education',
         'father_education',
         'place_living_now',

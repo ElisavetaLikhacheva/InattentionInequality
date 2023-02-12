@@ -1,13 +1,23 @@
 {{ block title }}
-    Detection
+    Detection page
 {{ endblock }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 {{ block content }}
+<div class="card">
+    <div class="card-body">
+        <p class="card-text">Вы уже знаете своё место в распределении доходов.</p>
+        <div class="alert alert-info">
+            Напоминаем, вы находитесь в{{if player.participant.decile == 2}}о{{endif}}
+            {{player.participant.decile}} дециле распределения доходов.
+        </div>
+        <p class="card-text">Вы можете узнать место Вашего партнера в распределении доходов.</p>
+        {{formfields}}
+        {{ next_button }}
+    </div>
+</div>
 
-{{formfields}}
 
-
-    {{ next_button }}
 {{ endblock }}
 
 

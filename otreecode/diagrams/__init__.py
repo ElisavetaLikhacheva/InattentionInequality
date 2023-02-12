@@ -7,7 +7,6 @@ Your app description
 """
 
 
-
 class C(BaseConstants):
     NAME_IN_URL = 'diagrams'
     PLAYERS_PER_GROUP = None
@@ -20,6 +19,7 @@ class C(BaseConstants):
         [4, 'D'],
         [5, 'E']
     ]
+
 
 class Subsession(BaseSubsession):
     pass
@@ -45,7 +45,7 @@ class Player(BasePlayer):
     median_income = models.IntegerField(
         label='Как вы думаете, сколько составляет медианный ежемесячный доход в России?',
         min=0
-    ) #slider!
+    )  # slider!
 
     poor_10 = models.IntegerField(
         label='Как Вы думаете, какой средний ежемесячный доход у 10% самых бедных жителей России?',
@@ -81,22 +81,20 @@ def creating_session(subsession):
 
 def participant_income_place(player: Player):
     true_decile = list([11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466])
-    if player.income <= int(true_decile[0]/1000):
+    if player.income <= int(true_decile[0] / 1000):
         player.decile = 1
     for i in range(0, 9):
-        if player.income > int(true_decile[i]/1000):
-            player.decile = i+2
+        if player.income > int(true_decile[i] / 1000):
+            player.decile = i + 2
         else:
             break
     return player.decile
 
+
 # PAGES
-# class Intro(Page):
-#def creating_session(subsession):
-# session = subsession.session
-# for player in subsession.get_players():
-#   participant = player.participant
-#   participant.treatment = session.config['treatment']
+class Intro(Page):
+    pass
+
 
 class InfoIncome(Page):
     form_model = 'player'
@@ -106,50 +104,55 @@ class InfoIncome(Page):
                    'poor_10',
                    'rich_10',
                    'percent_below',
+                   'income'
                    ]
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         participant = player.participant
-        # participant.income = player.income
         participant.info = player.info
+        participant.income = player.income
+        player.decile = participant_income_place(player)
+        participant.decile = player.decile
+
 
 class InfoTreatment(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.info == 1
 
-# class ResultsWaitPage(WaitPage):
-#     pass
-
-class IncomeQ(Page):
-    form_model = 'player'
-    form_fields = ['income']
+    @staticmethod
+    def js_vars(player: Player):
+        return dict(decile=player.decile)
 
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        participant = player.participant
-        participant.income = player.income
-        player.decile = participant_income_place(player)
-        # if player.income < 31:
-        #     player.decile = 1
-        # else:
-        #     player.decile = 2
-        participant.decile = player.decile
+    def vars_for_template(player: Player):
+        decile = participant_income_place(player)
+        decile_below = []
+        for i in range(1, decile):
+            decile_below.append(i)
 
-    # @staticmethod
-    # def is_displayed(player: Player):
-    #     return player.round_number == 1
+        max_decile_higher = len(decile_below) + 2
+        decile_higher = []
+        for j in range(max_decile_higher, 11):
+            decile_higher.append(j)
+        people_poorer = (decile - 1) * 10
 
-# class Results(Page):
-#     pass
+        return dict(decile_below=decile_below,
+                    decile_higher=decile_higher,
+                    people_poorer=people_poorer)
+
+
+class IntroDictator(Page):
+    pass
 
 
 page_sequence = [
-    # Intro,
+    Intro,
     InfoIncome,
     InfoTreatment,
     # ResultsWaitPage,
-    IncomeQ,
-    # Results
+    # IncomeQ,
+    # Results,
+    IntroDictator
 ]

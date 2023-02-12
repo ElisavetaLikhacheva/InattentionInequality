@@ -1,7 +1,8 @@
 {{ block title }}
-
+Этап 1
 {{ endblock }}
 {{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 <div class="card">
     <div class="card-body">
@@ -13,16 +14,12 @@
             <li class="list-group-item">{{formfield 'russian_pyramid'}}</li>
         </ul>
     </div>
-
-
 </div>
-
-
 
 
 <div class="card">
     <div class="card-body">
-        <p>Следующие вопросы относятся к средним ежемесячным доходам, которые могут включают:
+        <p class="p_indent">Следующие вопросы относятся к средним ежемесячным доходам, которые могут включают:
             заработную плату, включая доходы от самозанятости; пособия и социальные выплаты; доходы от ренты;
             дивиденды и проценты от депозитов; роялти.
         </p>
@@ -32,28 +29,28 @@
             <li class="list-group-item">{{formfield 'rich_10'}}</li>
             <li class="list-group-item">
                 <label> Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?
+                    Потяните ползунок, чтобы установить значение.
                 <br>
                 <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
                 </label>
                 <p id="description"></p>
-
-                <script">
-                let description = document.getElementById('description');
-                function updateDescription(input) {
-                    let percent_below = parseInt(input.value);
-                    description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
-                }
-                </script>
             </li>
+            <li class="list-group-item"> {{formfield 'income'}}</li>
         </ul>
+
+
     </div>
 </div>
 
+{{ next_button }}
 
+<script>
+    let description = document.getElementById('description');
+    function updateDescription(input) {
+        let percent_below = parseInt(input.value);
+        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
+    }
+</script>
 
-
-
-
-    {{ next_button }}
 
 {{ endblock }}
