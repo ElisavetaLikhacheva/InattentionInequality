@@ -11,6 +11,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'diagrams'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+    ENDOWMENT = cu(100)
 
     Q_PYRAMIDS = [
         [1, 'A'],
@@ -43,17 +44,19 @@ class Player(BasePlayer):
     )
 
     median_income = models.IntegerField(
-        label='Как вы думаете, сколько составляет медианный ежемесячный доход в России?',
+        label='Как вы думаете, сколько составляет медианный ежемесячный доход в России? Укажите ответ в рублях.',
         min=0
     )  # slider!
 
     poor_10 = models.IntegerField(
-        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых бедных жителей России?',
+        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых бедных жителей России? '
+              'Укажите ответ в рублях.',
         min=0
     )
 
     rich_10 = models.IntegerField(
-        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых богатых жителей России?',
+        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых богатых жителей России? '
+              'Укажите ответ в рублях.',
         min=0
     )
 
@@ -62,7 +65,7 @@ class Player(BasePlayer):
         min=0, max=100
     )
     income = models.IntegerField(
-        label='Сколько в среднем ежемесячно Вы зарабатываете? (В тысячах рублей)',
+        label='Сколько в среднем ежемесячно Вы зарабатываете? Укажите ответ в тысячах рублей.',
         min=0
     )
     info = models.BooleanField()
@@ -77,6 +80,9 @@ def creating_session(subsession):
         else:
             player.info = next(info)
         print('set info to', player.info)
+
+
+true_decile = list([11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466])
 
 
 def participant_income_place(player: Player):
@@ -127,6 +133,7 @@ class InfoTreatment(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        true_decile_start = list([0, 11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466])
         decile = participant_income_place(player)
         decile_below = []
         for i in range(1, decile):
@@ -140,7 +147,9 @@ class InfoTreatment(Page):
 
         return dict(decile_below=decile_below,
                     decile_higher=decile_higher,
-                    people_poorer=people_poorer)
+                    people_poorer=people_poorer,
+                    true_decile_start=true_decile_start,
+                    true_decile_end=true_decile)
 
 
 class IntroDictator(Page):

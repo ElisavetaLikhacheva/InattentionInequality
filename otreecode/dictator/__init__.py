@@ -121,6 +121,8 @@ class ResultsWaitPage(WaitPage):
 class DGDecision(Page):
     pass
 
+class IntroDQ:
+    pass
 
 
 
@@ -132,5 +134,6 @@ page_sequence = [
     WP3,
     MainDictatorDecision,
     ResultsWaitPage,
-    DGDecision
+    DGDecision,
+    # IntroDQ,
 ]

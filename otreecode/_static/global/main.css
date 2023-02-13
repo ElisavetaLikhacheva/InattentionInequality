@@ -1,7 +1,7 @@
 
 h4{
     font-weight: bold;
-    text-align: center
+    text-align: center;
 }
 .p_indent {
     text-indent: 40px;
@@ -42,7 +42,7 @@ td{
     info-rgb: #c1caff;
 }
 .common {
-    margin: 50px auto;
+    margin: 80px auto;
     text-align: center;
 }
 .bar {

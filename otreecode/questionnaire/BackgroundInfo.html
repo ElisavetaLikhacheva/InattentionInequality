@@ -1,11 +1,27 @@
 {{ block title }}
-    Background
+    Этап 3
 {{ endblock }}
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 
+<div class="card">
+    <div class="card-body">
+        <p class="p_bold">Здесь Вам необходимо ответить на несколько вопросов о себе.</p>
+        <ul class="list-group list-group-flush">
+            {{for field in form}}
+            <li class="list-group-item">
+                <p>{{field.label}}</p>
+                <div style="margin-bottom: 20px">{{field}}</div>
+            </li>
+            {{endfor}}
+        </ul>
+    </div>
+</div>
+
 {{formfields}}
+
+
     {{ next_button }}
 {{ endblock }}
 
