@@ -38,10 +38,10 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='full',
-        display_name='diagrams, dictator, questionnaire random',
+        display_name='TOTAL',
         app_sequence=['diagrams', 'dictator', 'questionnaire'],
-        num_demo_participants=2,
-        # use_browser_bots=True
+        num_demo_participants=20,
+        use_browser_bots=True
     ),
     dict(
          name='questionnaire',

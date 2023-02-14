@@ -1,7 +1,6 @@
 {{ block title }}
-{{if player.round_number == 2}} Поздравляем! Вы завершили 2 этап. {{else}} {{endif}}
+{{if player.round_number == 2}} Поздравляем! Вы завершили 2 этап. {{else}} Раунд 1 окончен, начинается раунд 2 {{endif}}
 {{ endblock }}
-
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
@@ -30,14 +29,9 @@
                     1 очко = 1 рубль.</li>
                 <li class="list-group-item"></li>
             </ul>
-
             {{endif}}
     </div>
 </div>
-
-
-
-
     {{ next_button }}
 {{ endblock }}
 

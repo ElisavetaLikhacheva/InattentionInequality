@@ -1,13 +1,13 @@
 {{ block title }}
-    Detection page
+    Вы можете узнать место партнера в распределении
 {{ endblock }}
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 <div class="card">
     <div class="card-body">
-        <p class="card-text">Вы уже знаете своё место в распределении доходов.</p>
-        <div class="alert alert-info">
+        <p>Вы уже знаете своё место в распределении доходов.</p>
+        <div class="alert alert-primary">
             Напоминаем, вы находитесь в{{if player.participant.decile == 2}}о{{endif}}
             {{player.participant.decile}} дециле распределения доходов.
         </div>

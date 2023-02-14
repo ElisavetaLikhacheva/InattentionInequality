@@ -6,7 +6,7 @@ from . import *
 
 class PlayerBot(Bot):
     def play_round(self):
-        # yield Intro
+        yield Intro
         yield InfoIncome, dict(russian_pyramid=random.choice([1, 2, 3, 4, 5]),
                                ideal_pyramid=random.choice([1, 2, 3, 4, 5]),
                                median_income=random.randint(0, 100),
@@ -18,6 +18,7 @@ class PlayerBot(Bot):
 
         if self.player.info == 1:
             yield InfoTreatment,
+        yield IntroDictator
         # yield IncomeQ, dict(income=random.randint(1, 150))
 
 

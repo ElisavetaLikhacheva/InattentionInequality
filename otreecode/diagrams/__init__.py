@@ -14,11 +14,11 @@ class C(BaseConstants):
     ENDOWMENT = cu(100)
 
     Q_PYRAMIDS = [
-        [1, 'A'],
-        [2, 'B'],
-        [3, 'C'],
-        [4, 'D'],
-        [5, 'E']
+        [1, 'А'],
+        [2, 'Б'],
+        [3, 'В'],
+        [4, 'Г'],
+        [5, 'Д']
     ]
 
 
@@ -73,7 +73,7 @@ class Player(BasePlayer):
 
 
 def creating_session(subsession):
-    info = itertools.cycle([False, True, True, True])
+    info = itertools.cycle([True, False, True, True])
     for player in subsession.get_players():
         if 'info' in subsession.session.config:
             player.info = subsession.session.config['info']

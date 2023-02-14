@@ -12,6 +12,7 @@
             может быть устроено общество.</p>
 
         <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{formfield 'general_trust'}}</li>
             <li class="list-group-item">
                 <b>Доверяете ли Вы следующим организациям?</b>
                 <p>
@@ -67,8 +68,27 @@
                 </table>
             </li>
 
-            <li class="list-group-item"> {{formfield 'social_mobility'}} </li>
-            <li class="list-group-item"> {{formfield 'politics_interest'}}</li>
+            <li class="list-group-item"> {{form.social_mobility.label}}
+                <table class="table">
+                        <td>Социальные лифты совсем не работают</td>
+                        {{ for choice in form.social_mobility }}
+                        <td>{{ choice }} <p>{{choice.label}}</p></td>
+                        {{ endfor }}
+                        <td>Социальные лифты хорошо работают</td>
+                    </tr>
+                </table>
+            </li>
+
+            <li class="list-group-item"> {{form.politics_interest.label}}
+                <table class="table">
+                        <td>Я совсем не интересуюсь политикой</td>
+                        {{ for choice in form.politics_interest }}
+                        <td>{{ choice }} <p>{{choice.label}}</p></td>
+                        {{ endfor }}
+                        <td>Я интересуюсь политикой</td>
+                    </tr>
+                </table>
+            </li>
             <li class="list-group-item">
                 <p>Далее приведены некоторые высказывания, которые могли бы описать Ваши взгляды,
                 где 1 — полное согласие с фразой слева, а 10 — с высказыванием справа.
@@ -82,11 +102,11 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <td style="text-align:center;">Упорный труд обычно ведет к улучшению жизни</td>
+                    <td>Упорный труд обычно ведет к улучшению жизни</td>
                     {{ for choice in form.effort_luck }}
                     <td>{{ choice }} </td>
                     {{ endfor }}
-                    <td style="text-align:center;">Упорный труд обычно не приносит успеха, скорее к этому ведут удача и связи</td>
+                    <td>Упорный труд обычно не приносит успеха, скорее к этому ведут удача и связи</td>
                 </tr>
                 <tr>
                     <td>Государство должно нести больше ответственности за то, чтобы все люди были обеспечены</td>
@@ -117,7 +137,7 @@
                 что Вам близки левые взгляды, а 10 — правые. </p>
                 <table class="table">
                         <td>Лево</td>
-                        {{ for choice in form.effort_luck }}
+                        {{ for choice in form.left_right }}
                         <td>{{ choice }} <p>{{choice.label}}</p></td>
                         {{ endfor }}
                         <td>Право</td>
@@ -214,12 +234,9 @@
                 </table>
             </li>
         </ul>
-
-
-    {{ next_button }}
     </div>
 </div>
-
+{{ next_button }}
 
 
 {{ endblock }}

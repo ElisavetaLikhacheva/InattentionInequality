@@ -2,7 +2,6 @@ from otree.api import *
 import random
 import itertools
 
-
 doc = """
 Your app description
 """
@@ -23,10 +22,13 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько Вы передадите игроку В?')
+    share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько Вы передадите игроку Б?')
 
+    # quest_detection_recipient_place — переменная для показа вопроса о выявлении места партнера
     quest_detection_recipient_place = models.BooleanField(label='Хотите ли вы узнать место другого игрока?')
+    # detection_recipient_place — переменная с ответом игрока на вопрос о выявлении места партнера
     detection_recipient_place = models.BooleanField(label='Хотите ли Вы это сделать?')
+    # recipient_place — выявление места партнера
     recipient_place = models.BooleanField()
 
 
@@ -35,14 +37,12 @@ class Player(BasePlayer):
     other_player_decile = models.IntegerField()
 
 
-
 # FUNCTIONS
 def set_payoffs(group):
     dictator = group.get_player_by_role('A')
     recipient = group.get_player_by_role('Б')
     dictator.payoff = C.ENDOWMENT - group.share
     recipient.payoff = group.share
-
 
 
 def other_player(player: Player):
@@ -55,16 +55,20 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        quest_detect = itertools.cycle([True, False, False])
+        quest_detect = itertools.cycle([True, False])
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
             if p.role == C.DICTATOR_ROLE:
-                if p.participant.info and p.round_number > 1:
-                    p.group.quest_detection_recipient_place = next(quest_detect)
+                if 'quest_detection_recipient_place' in subsession.session.config:
+                    p.quest_detection_recipient_place = subsession.session.config['quest_detection_recipient_place']
                 else:
-                    p.group.quest_detection_recipient_place = False
+                    if p.participant.info and p.round_number > 1:
+                        p.group.quest_detection_recipient_place = next(quest_detect)
+                    else:
+                        p.group.quest_detection_recipient_place = p.group.detection_recipient_place = False
         print('WP1', group.quest_detection_recipient_place)
+
 
 class WP2(WaitPage):
     pass
@@ -87,6 +91,10 @@ class WP3(WaitPage):
         players = subsession.get_players()
         for p in players:
             if p.role == C.DICTATOR_ROLE:
+                # if 'detection_recipient_place' and 'recipient_place' in subsession.session.config:
+                #     p.detection_recipient_place = subsession.session.config['detection_recipient_place']
+                #     p.recipient_place = subsession.session.config['recipient_place']
+                # else:
                 if p.participant.info and p.round_number > 1:
                     if not p.group.quest_detection_recipient_place:
                         p.group.detection_recipient_place = False
@@ -95,7 +103,6 @@ class WP3(WaitPage):
                         p.group.recipient_place = p.group.detection_recipient_place
                 else:
                     p.group.recipient_place = p.group.detection_recipient_place = False
-
 
 
 class MainDictatorDecision(Page):
@@ -121,9 +128,9 @@ class ResultsWaitPage(WaitPage):
 class DGDecision(Page):
     pass
 
-class IntroDQ:
-    pass
 
+class IntroDQ(Page):
+    pass
 
 
 page_sequence = [
@@ -135,5 +142,5 @@ page_sequence = [
     MainDictatorDecision,
     ResultsWaitPage,
     DGDecision,
-    # IntroDQ,
+    IntroDQ,
 ]

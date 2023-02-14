@@ -404,16 +404,6 @@ class InequalityAssessment(Page):
                    'high_position_networking',
                    'high_position_social_elevators',
                    ]
-    # @staticmethod
-    # def vars_for_template(player: Player):
-    #     high_position = ['high_position_family',
-    #                      'high_position_education',
-    #                      'high_position_work',
-    #                      'high_position_networking',
-    #                      'high_position_social_elevators'
-    #                      ]
-    #
-    #     return dict(high_position=high_position)
 
 
 class Redistribution(Page):
@@ -512,7 +502,7 @@ class BackgroundInfo(Page):
     ]
 
 
-class Results(Page):
+class LastQ(Page):
     pass
 
 
@@ -525,7 +515,5 @@ page_sequence = [
     Big5,
     # Risk,
     BackgroundInfo,
-    # HighPosition,
-
-    # Results
+    LastQ
 ]
