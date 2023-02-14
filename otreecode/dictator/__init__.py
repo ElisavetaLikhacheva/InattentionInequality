@@ -56,17 +56,25 @@ class WP1(WaitPage):
     @staticmethod
     def after_all_players_arrive(group: Group):
         quest_detect = itertools.cycle([True, False])
+        # group.subsession.group_randomly(fixed_id_in_group=True)
+        # subsession.group_randomly(fixed_id_in_group=True)
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
             if p.role == C.DICTATOR_ROLE:
                 if 'quest_detection_recipient_place' in subsession.session.config:
-                    p.quest_detection_recipient_place = subsession.session.config['quest_detection_recipient_place']
+                    if p.participant.info and p.round_number > 1:
+                        p.group.quest_detection_recipient_place = subsession.session.config['quest_detection_recipient_place']
+                    else:
+                        p.group.quest_detection_recipient_place = False
                 else:
                     if p.participant.info and p.round_number > 1:
                         p.group.quest_detection_recipient_place = next(quest_detect)
                     else:
-                        p.group.quest_detection_recipient_place = p.group.detection_recipient_place = False
+                        p.group.quest_detection_recipient_place = False
+
+                    if not p.group.quest_detection_recipient_place:
+                        p.group.detection_recipient_place = False
         print('WP1', group.quest_detection_recipient_place)
 
 
@@ -91,18 +99,19 @@ class WP3(WaitPage):
         players = subsession.get_players()
         for p in players:
             if p.role == C.DICTATOR_ROLE:
-                # if 'detection_recipient_place' and 'recipient_place' in subsession.session.config:
-                #     p.detection_recipient_place = subsession.session.config['detection_recipient_place']
-                #     p.recipient_place = subsession.session.config['recipient_place']
-                # else:
-                if p.participant.info and p.round_number > 1:
-                    if not p.group.quest_detection_recipient_place:
-                        p.group.detection_recipient_place = False
-                        p.group.recipient_place = next(recipient_place)
+                if 'recipient_place' in subsession.session.config:
+                    if p.participant.info and p.round_number > 1:
+                        p.group.recipient_place = subsession.session.config['recipient_place']
                     else:
-                        p.group.recipient_place = p.group.detection_recipient_place
+                        p.group.detection_recipient_place = p.group.recipient_place = 0
                 else:
-                    p.group.recipient_place = p.group.detection_recipient_place = False
+                    if p.participant.info and p.round_number > 1:
+                        if not p.group.quest_detection_recipient_place:
+                            p.group.recipient_place = next(recipient_place)
+                        else:
+                            p.group.recipient_place = p.group.detection_recipient_place
+                    else:
+                        p.group.recipient_place = False
 
 
 class MainDictatorDecision(Page):
@@ -136,8 +145,8 @@ class IntroDQ(Page):
 page_sequence = [
     # IncomeQ,
     WP1,
-    # WP2,
     Detection,
+    WP2,
     WP3,
     MainDictatorDecision,
     ResultsWaitPage,

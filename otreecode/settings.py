@@ -3,22 +3,6 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-         name='diagrams_info_0',
-         display_name='Only diagrams with info=0',
-         app_sequence=['diagrams'],
-         num_demo_participants=2,
-         info=0,
-         # use_browser_bots=True
-    ),
-    dict(
-         name='diagrams_info_1',
-         display_name='Only diagrams with info=1',
-         app_sequence=['diagrams'],
-         num_demo_participants=2,
-         info=1,
-         # use_browser_bots=True
-    ),
-    dict(
          name='diagrams_dictator_random',
          display_name='diagrams and dictator random',
          app_sequence=['diagrams', 'dictator'],
@@ -27,20 +11,20 @@ SESSION_CONFIGS = [
      ),
     dict(
         name='diagrams_dictator',
-        display_name='diagrams and dictator: info0(, quest0, detection0, rec_pl0)',
+        display_name='Total: info1, quest1, detection1, rec_pl1',
         app_sequence=['diagrams', 'dictator'],
         num_demo_participants=2,
         info=1,
-        quest_detection_recipient_place=0,
-        detection_recipient_place=0,
-        recipient_place=0,
+        quest_detection_recipient_place=1,
+        detection_recipient_place=1,
+        recipient_place=1,
         # use_browser_bots=True
     ),
     dict(
         name='full',
-        display_name='TOTAL',
+        display_name='TOTAL random',
         app_sequence=['diagrams', 'dictator', 'questionnaire'],
-        num_demo_participants=20,
+        num_demo_participants=8,
         use_browser_bots=True
     ),
     dict(
