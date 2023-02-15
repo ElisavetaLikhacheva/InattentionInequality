@@ -1,0 +1,30 @@
+{{ block title }}
+Этап 2. Результаты раунда {{player.round_number}} из {{C.NUM_ROUNDS}}
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+
+<h3></h3>
+<div class="card">
+    <div class="card-header">
+    Раунд {{player.round_number}} из {{C.NUM_ROUNDS}}
+    </div>
+
+    <div class="card-body">
+        <p class="card-text"> В этом раунде Вы были игроком {{player.role}}.</p>
+        {{if player.role == C.DICTATOR_ROLE}}
+        Из {{C.ENDOWMENT}} Вы передали игроку "Б" {{group.share}} .
+        {{else}}
+        Игрок "А" передал Вам {{player.payoff}}.
+        {{endif}}
+        <p></p>
+        <p class="card-text">Итого, <b>ваш бонус</b> за этот раунд составил <b> {{player.payoff}}</b>.</p>
+    </div>
+</div>
+
+    {{ next_button }}
+{{ endblock }}
+
+

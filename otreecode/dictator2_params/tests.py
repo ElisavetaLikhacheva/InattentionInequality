@@ -9,7 +9,7 @@ class PlayerBot(Bot):
     def play_round(self):
         # yield Intro, dict(income=random.randint(1, 150))
 
-        if self.player.role == C.DICTATOR_ROLE and  self.player.group.treatment == 3:
+        if self.player.role == C.DICTATOR_ROLE and self.participant.info and self.player.round_number > 1 and self.group.quest_detection_recipient_place:
             yield Detection, dict(detection_recipient_place=random.choice([True, False])
                                   )
 

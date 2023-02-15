@@ -73,7 +73,7 @@ class Player(BasePlayer):
 
 
 def creating_session(subsession):
-    info = itertools.cycle([True, False, True, True])
+    info = itertools.cycle([True, False, True, True, True])
     for player in subsession.get_players():
         if 'info' in subsession.session.config:
             player.info = subsession.session.config['info']

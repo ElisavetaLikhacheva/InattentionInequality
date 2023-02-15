@@ -24,12 +24,9 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько Вы передадите игроку Б?')
 
-    # quest_detection_recipient_place — переменная для показа вопроса о выявлении места партнера
-    quest_detection_recipient_place = models.BooleanField(label='Хотите ли вы узнать место другого игрока?')
     # detection_recipient_place — переменная с ответом игрока на вопрос о выявлении места партнера
     detection_recipient_place = models.BooleanField(label='Хотите ли Вы это сделать?')
-    # recipient_place — выявление места партнера
-    recipient_place = models.BooleanField()
+    treatment = models.IntegerField()
 
 
 class Player(BasePlayer):
@@ -55,27 +52,24 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        quest_detect = itertools.cycle([True, False])
-        # group.subsession.group_randomly(fixed_id_in_group=True)
-        # subsession.group_randomly(fixed_id_in_group=True)
+        treatment = itertools.cycle([1, 2, 3])
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
             if p.role == C.DICTATOR_ROLE:
-                if 'quest_detection_recipient_place' in subsession.session.config:
-                    if p.participant.info and p.round_number > 1:
-                        p.group.quest_detection_recipient_place = subsession.session.config['quest_detection_recipient_place']
+                if p.participant.info:
+                    if p.round_number > 1:
+                        if 'treatment' in subsession.session.config:
+                            p.group.treatment = subsession.session.config['treatment']
+                        else:
+                            p.group.treatment = next(treatment)
                     else:
-                        p.group.quest_detection_recipient_place = False
+                        p.group.treatment = 1
                 else:
-                    if p.participant.info and p.round_number > 1:
-                        p.group.quest_detection_recipient_place = next(quest_detect)
-                    else:
-                        p.group.quest_detection_recipient_place = False
-
-                    if not p.group.quest_detection_recipient_place:
-                        p.group.detection_recipient_place = False
-        print('WP1', group.quest_detection_recipient_place)
+                    p.group.treatment = 0
+        if group.treatment != 3:
+            group.detection_recipient_place = 0
+        print('WP1', group.treatment)
 
 
 class WP2(WaitPage):
@@ -88,30 +82,12 @@ class Detection(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.group.quest_detection_recipient_place and player.role == C.DICTATOR_ROLE and player.participant.info
+        return player.role == C.DICTATOR_ROLE and player.group.treatment == 3 and player.round_number != 1
+
 
 
 class WP3(WaitPage):
-    @staticmethod
-    def after_all_players_arrive(group: Group):
-        recipient_place = itertools.cycle([True, False])
-        subsession = group.subsession
-        players = subsession.get_players()
-        for p in players:
-            if p.role == C.DICTATOR_ROLE:
-                if 'recipient_place' in subsession.session.config:
-                    if p.participant.info and p.round_number > 1:
-                        p.group.recipient_place = subsession.session.config['recipient_place']
-                    else:
-                        p.group.detection_recipient_place = p.group.recipient_place = 0
-                else:
-                    if p.participant.info and p.round_number > 1:
-                        if not p.group.quest_detection_recipient_place:
-                            p.group.recipient_place = next(recipient_place)
-                        else:
-                            p.group.recipient_place = p.group.detection_recipient_place
-                    else:
-                        p.group.recipient_place = False
+    pass
 
 
 class MainDictatorDecision(Page):
@@ -147,7 +123,6 @@ page_sequence = [
     WP1,
     Detection,
     WP2,
-    WP3,
     MainDictatorDecision,
     ResultsWaitPage,
     DGDecision,

@@ -3,29 +3,34 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-         name='diagrams_dictator_random',
-         display_name='diagrams and dictator random',
-         app_sequence=['diagrams', 'dictator'],
-         num_demo_participants=2,
-         # use_browser_bots=True
-     ),
+        name='full_bot',
+        display_name='TOTAL random (bot), 20 players',
+        app_sequence=['diagrams', 'dictator', 'questionnaire'],
+        num_demo_participants=20,
+        use_browser_bots=True
+    ),
     dict(
-        name='diagrams_dictator',
-        display_name='Total: info1, quest1, detection1, rec_pl1',
-        app_sequence=['diagrams', 'dictator'],
+        name='full_nobot',
+        display_name='TOTAL random ( without bot) 2',
+        app_sequence=['diagrams', 'dictator', 'questionnaire'],
         num_demo_participants=2,
-        info=1,
-        quest_detection_recipient_place=1,
-        detection_recipient_place=1,
-        recipient_place=1,
         # use_browser_bots=True
     ),
     dict(
-        name='full',
-        display_name='TOTAL random',
+        name='full_T2',
+        display_name='TOTAL T2',
         app_sequence=['diagrams', 'dictator', 'questionnaire'],
-        num_demo_participants=8,
-        use_browser_bots=True
+        num_demo_participants=2,
+        treatment=2,
+        # use_browser_bots=True
+    ),
+    dict(
+        name='full_T3',
+        display_name='TOTAL T3',
+        app_sequence=['diagrams', 'dictator', 'questionnaire'],
+        num_demo_participants=2,
+        treatment=3,
+        # use_browser_bots=True
     ),
     dict(
          name='questionnaire',

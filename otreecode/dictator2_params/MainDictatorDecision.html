@@ -8,7 +8,7 @@
 
 <div class="card">
   <div class="card-body">
-      {{ if player.group.treatment == 2 or player.group.detection_recipient_place == 1}}
+      {{ if player.group.recipient_place }}
       <div>
           <p class="alert alert-primary">Вы находитесь в {{player.participant.decile}} дециле распределения доходов</p>
           <p class="alert alert-primary">Ваш партнер находится в {{other_player_decile}} дециле распределения доходов</p>
