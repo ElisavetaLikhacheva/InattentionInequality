@@ -133,23 +133,27 @@ class InfoTreatment(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        true_decile_start = list([0, 11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466])
+        true_decile_start = list([0, 11349, 15957, 20404, 25082, 31100, 38050, 45000, 57821, 81466, '150000+'])
         decile = participant_income_place(player)
-        decile_below = []
-        for i in range(1, decile):
-            decile_below.append(i)
 
-        max_decile_higher = len(decile_below) + 2
-        decile_higher = []
-        for j in range(max_decile_higher, 11):
-            decile_higher.append(j)
+        delta = []
+        for i in range(9):
+            delta.append([i+1, f' {true_decile_start[0:9][i]} — {true_decile_start[1:10][i] - 1}'])
+        delta.append([10, f' {true_decile_start[9]} — {true_decile_start[10]}'])
+        print('delta', delta)
+
+        decile_below = delta[:decile-1]
+        decile_in = delta[decile]
+        decile_higher = delta[decile:10]
+
         people_poorer = (decile - 1) * 10
 
         return dict(decile_below=decile_below,
+                    decile_in=decile_in,
                     decile_higher=decile_higher,
                     people_poorer=people_poorer,
-                    true_decile_start=true_decile_start,
-                    true_decile_end=true_decile)
+                    delta=delta,
+                    )
 
 
 class IntroDictator(Page):

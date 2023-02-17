@@ -30,17 +30,20 @@
 
 
         <div class="common">
-            {{for i in decile_below}}
+            {{for i, k in decile_below}}
             <div class="bar lower" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
-                 data-bs-content="Это {{i}} дециль."></div>
+                 data-bs-content="<h6> Это {{i}} дециль. </h6> <p>Доход: {{k}} рублей в месяц</p>"
+                 data-bs-html="true">
+            </div>
             {{endfor}}
             <div class="bar in" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
                  data-bs-title="Вы здесь!"
                  data-bs-custom-class="custom-popover"
                  data-bs-content="Ваш доход соответствует {{player.decile}} децилю."></div>
-            {{for i in decile_higher}}
+            {{for i, k in decile_higher}}
             <div class="bar higher" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
-                 data-bs-content="Это {{i}} дециль."></div>
+                 data-bs-content="<h6> Это {{i}} дециль. </h6> <p>Доход: {{k}} рублей в месяц</p>" data-bs-html="true">
+            </div>
             {{endfor}}
         </div>
 
@@ -58,9 +61,9 @@
         <table class="table">
             <thead>
             <tr class="table-primary">
-                <th></th>
-                <th>Ваше решение</th>
-                <th>Фактическое значение</th>
+                <th style="width: 30%"></th>
+                <th class="text_center">Ваше решение</th>
+                <th class="text_center">Фактическое значение</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">

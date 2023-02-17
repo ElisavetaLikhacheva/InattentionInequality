@@ -4,6 +4,15 @@
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
+<script>
+    let description = document.getElementById('description');
+    function updateDescription(input) {
+        let percent_below = parseInt(input.value);
+        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
+    }
+</script>
+
+
 <div class="card">
     <div class="card-body">
         <div class="card-text">Ниже представлены 5 пирамид, показывающих разные типы общества.
@@ -44,13 +53,6 @@
 
 {{ next_button }}
 
-<script>
-    let description = document.getElementById('description');
-    function updateDescription(input) {
-        let percent_below = parseInt(input.value);
-        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
-    }
-</script>
 
 
 {{ endblock }}

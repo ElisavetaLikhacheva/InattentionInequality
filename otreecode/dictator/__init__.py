@@ -46,9 +46,21 @@ def other_player(player: Player):
     return player.get_others_in_group()[0]
 
 
+def creating_session(subsession):
+    subsession.group_randomly(fixed_id_in_group=True)
+
+
 # PAGES
 class WP1(WaitPage):
     group_by_arrival_time = True
+
+#TODO: риск и межвременные предпочтения
+#TODO: на уровне подсессии зафиксировать роль игрока и соединить с новым
+
+    # @staticmethod
+    # def after_all_players_arrive(subsession: Subsession,):
+    #     subsession.group_randomly(fixed_id_in_group=True)
+
 
     @staticmethod
     def after_all_players_arrive(group: Group):
@@ -83,7 +95,6 @@ class Detection(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.role == C.DICTATOR_ROLE and player.group.treatment == 3 and player.round_number != 1
-
 
 
 class WP3(WaitPage):

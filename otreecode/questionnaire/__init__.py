@@ -1,6 +1,7 @@
 from otree.api import *
 import random
 import itertools
+from django import forms
 
 doc = """
 Your app description
