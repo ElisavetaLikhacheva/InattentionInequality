@@ -54,8 +54,8 @@ def creating_session(subsession):
 class WP1(WaitPage):
     group_by_arrival_time = True
 
-#TODO: риск и межвременные предпочтения
-#TODO: на уровне подсессии зафиксировать роль игрока и соединить с новым
+
+
 
     # @staticmethod
     # def after_all_players_arrive(subsession: Subsession,):

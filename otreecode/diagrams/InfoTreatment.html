@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
 <script>
+    $(document).ready(function(){$('[data-toggle="popover"]').popover({ trigger: "hover" });});
+</script>
+
+<script>
     let description = document.getElementById('description');
     function updateDescription(input) {
         let percent_below = parseInt(input.value);
@@ -12,10 +16,7 @@
     }
 </script>
 
-<script>
-    $(document).ready(function(){$('[data-toggle="popover"]').popover({ trigger: "hover" });});
-</script>
-
+<!--<script src="/jquery/2.1.1/jquery.min.js"></script>-->
 
 <div class="card ">
     <div class="card-body">
@@ -30,25 +31,29 @@
 
 
         <div class="common">
+
             {{for i, k in decile_below}}
             <div class="bar lower" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
                  data-bs-content="<h6> Это {{i}} дециль. </h6> <p>Доход: {{k}} рублей в месяц</p>"
                  data-bs-html="true">
             </div>
             {{endfor}}
+
             <div class="bar in" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
                  data-bs-title="Вы здесь!"
                  data-bs-custom-class="custom-popover"
                  data-bs-content="Ваш доход соответствует {{player.decile}} децилю."></div>
+
             {{for i, k in decile_higher}}
             <div class="bar higher" data-toggle="popover" data-trigger="hover focus" data-bs-placement="bottom"
                  data-bs-content="<h6> Это {{i}} дециль. </h6> <p>Доход: {{k}} рублей в месяц</p>" data-bs-html="true">
             </div>
             {{endfor}}
-        </div>
 
+        </div>
     </div>
 </div>
+
 <div class="card">
     <div class="card-body">
 
@@ -79,7 +84,7 @@
             </tr>
             <tr>
                 <td>Средний ежемесячный доход у 10% самых богатых жителей России</td>
-                <td> {{player.rich_10}} рублей</td>
+                <td> {{player.rich_10}}</td>
                 <td> 124 515 рублей </td>
             </tr>
             <tr>
