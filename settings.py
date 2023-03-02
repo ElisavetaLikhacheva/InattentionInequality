@@ -5,6 +5,18 @@ from os import environ
 #     Currency as c, currency_range
 # )
 
+import os
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 
 SESSION_CONFIGS = [
     # dict(
