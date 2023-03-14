@@ -100,7 +100,6 @@ class Results(Page):
 #    form_fields = ['pun_{}'.format(i) for i in range(1, 6)]
     def vars_for_template(self):
         self.player.set_punpay()
-        self.player.my_method()
         return {
         #    'my_profit': sum([p.my_profit for p in self.player.in_all_rounds()]),
             'my_in_all_rounds_1': self.group.get_player_by_id(1).my_profit,
