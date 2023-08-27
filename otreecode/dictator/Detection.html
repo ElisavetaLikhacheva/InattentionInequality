@@ -6,13 +6,29 @@
 
 <div class="card">
     <div class="card-body">
-        <p>Вы уже знаете своё место в распределении доходов.</p>
-        <div class="alert alert-primary">
-            Напоминаем, вы находитесь в{{if player.participant.decile == 2}}о{{endif}}
-            {{player.participant.decile}} дециле распределения доходов.
+
+            {{if player.group.treatment == 3}}
+        <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
+        Ваш партнер будет знать знаете ли Вы его финансовое положение
+            {{formfield 'check_info'}}
         </div>
-        <p class="card-text">Вы можете узнать место Вашего партнера в распределении доходов.</p>
-        {{formfields}}
+            {{endif}}
+
+            {{if player.group.treatment == 4}}
+        <div class="alert alert-primary"> Вы можете узнать финансовое положение Вашего партнера.
+        Ваш партнер НЕ узнает о том, нажали ли вы эту кнопку.
+            {{formfield 'check_info'}}
+        </div>
+            {{endif}}
+
+            {{if player.group.treatment == 5}}
+        <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
+        Ваш партнер будет знать о том, видели ли Вы информацию о его финансовом положении.
+            {{formfield 'check_info'}}
+        </div>
+            {{endif}}
+
+
         {{ next_button }}
     </div>
 </div>

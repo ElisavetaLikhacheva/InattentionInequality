@@ -143,7 +143,7 @@ class InfoTreatment(Page):
         print('delta', delta)
 
         decile_below = delta[:decile-1]
-        decile_in = delta[decile]
+        decile_in = delta[decile-1]
         decile_higher = delta[decile:10]
 
         people_poorer = (decile - 1) * 10

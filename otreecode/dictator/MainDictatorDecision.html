@@ -1,5 +1,5 @@
 {{ block title }}
-    Этап 2. Раунд {{player.round_number}} из {{C.NUM_ROUNDS}}
+    Этап 2
 {{ endblock }}
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
@@ -8,12 +8,7 @@
 
 <div class="card">
   <div class="card-body">
-      {{ if player.group.treatment == 2 or player.group.detection_recipient_place == 1}}
-      <div>
-          <p class="alert alert-primary">Вы находитесь в {{player.participant.decile}} дециле распределения доходов</p>
-          <p class="alert alert-primary">Ваш партнер находится в {{other_player_decile}} дециле распределения доходов</p>
-      </div>
-      {{ endif }}
+
       <p>
           В этом раунде Вы — игрок "А".
       </p>

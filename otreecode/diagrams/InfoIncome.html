@@ -4,16 +4,6 @@
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
 
-<script>
-    let description = document.getElementById('description');
-    function updateDescription(input) {
-        let percent_below = parseInt(input.value);
-        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
-    }
-</script>
-
-
-
 
 <div class="card">
     <div class="card-body">
@@ -35,7 +25,13 @@
             дивиденды и проценты от депозитов; роялти.
         </p>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{formfield 'median_income'}}</li>
+            <li class="list-group-item">
+                <div class="alert alert-primary">Если выстроить все значения доходов граждан в ряд по возрастанию и
+                    разделить его пополам, то значение, оказавшееся посередине, — <b>медианный доход</b>.
+                    <p>То есть <b>половина людей</b> получает доход меньше этого значения,
+                        и <b>половина людей — больше</b>.</p>
+                </div>
+                {{formfield 'median_income'}}</li>
             <li class="list-group-item">{{formfield 'poor_10'}}</li>
             <li class="list-group-item">{{formfield 'rich_10'}}</li>
             <li class="list-group-item">
@@ -44,17 +40,23 @@
                 <br>
                 <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
                 </label>
-                <p id="description"></p>
+                <p id="percent_below"></p>
             </li>
-            <li class="list-group-item"> {{formfield 'income'}}</li>
+            <li class="list-group-item">
+                <p class="alert alert-primary">Среднедушевой доход = Общий доход семьи за месяц / Количество членов семьи </p>
+
+                {{formfield 'income'}}
+                <p class="alert alert-warning">Пожалуйста, обратите внимание,
+                    что здесь ответ должен быть в тысячах рублей.</p></li>
         </ul>
-
-
     </div>
 </div>
-
 {{ next_button }}
-
-
-
+<script>
+    let description = document.getElementById('percent_below');
+    function updateDescription(input) {
+        let percent_below = parseInt(input.value);
+        description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
+    }
+</script>
 {{ endblock }}

@@ -10,34 +10,12 @@ SESSION_CONFIGS = [
         use_browser_bots=True
     ),
     dict(
-        name='full_nobot',
-        display_name='TOTAL random ( without bot) 2',
-        app_sequence=['diagrams', 'dictator', 'questionnaire'],
+        name='NEW_DG',
+        display_name='NEW_DG',
+        app_sequence=['dictator'],
         num_demo_participants=2,
         # use_browser_bots=True
     ),
-    dict(
-        name='full_T2',
-        display_name='TOTAL T2',
-        app_sequence=['diagrams', 'dictator', 'questionnaire'],
-        num_demo_participants=2,
-        treatment=2,
-        # use_browser_bots=True
-    ),
-    dict(
-        name='full_T3',
-        display_name='TOTAL T3',
-        app_sequence=['diagrams', 'dictator', 'questionnaire'],
-        num_demo_participants=2,
-        treatment=3,
-        # use_browser_bots=True
-    ),
-    dict(
-         name='questionnaire',
-         display_name='questionnaire only',
-         app_sequence=['questionnaire'],
-         num_demo_participants=1
-        ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -49,9 +27,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.01, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['income',
-                      'info',
-                      'decile']
+PARTICIPANT_FIELDS = [] #here u can gige through apps
 SESSION_FIELDS = []
 
 # ISO-639 code

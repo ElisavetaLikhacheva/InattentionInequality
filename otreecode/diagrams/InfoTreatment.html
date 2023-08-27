@@ -8,13 +8,6 @@
     $(document).ready(function(){$('[data-toggle="popover"]').popover({ trigger: "hover" });});
 </script>
 
-<script>
-    let description = document.getElementById('description');
-    function updateDescription(input) {
-        let percent_below = parseInt(input.value);
-        description.innerText = `Ваш доход соответствует ${decile} децилю.`
-    }
-</script>
 
 <!--<script src="/jquery/2.1.1/jquery.min.js"></script>-->
 
@@ -23,7 +16,7 @@
         <p class="p_indent">Здесь Вы можете посмотреть, как выглядит распределение доходов. Ниже изображены децили в распределении
             доходов населения. Для этого наведите курсор и изучите информацию.</p>
 
-        <p id="description"></p>
+
         <h4>Ваш ежемесячный доход: {{player.income}} {{if player.income > 0}} 000 {{endif}} рублей. </h4>
         <p style="text-align: center">Вы находитесь в {{player.decile}} дециле распределения.
             Это значит, что {{people_poorer}}% людей беднее, чем Вы.</p>
@@ -84,7 +77,7 @@
             </tr>
             <tr>
                 <td>Средний ежемесячный доход у 10% самых богатых жителей России</td>
-                <td> {{player.rich_10}}</td>
+                <td> {{player.rich_10}} рублей</td>
                 <td> 124 515 рублей </td>
             </tr>
             <tr>
