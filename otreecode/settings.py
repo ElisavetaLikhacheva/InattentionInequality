@@ -12,7 +12,7 @@ SESSION_CONFIGS = [
     dict(
         name='NEW_DG',
         display_name='NEW_DG',
-        app_sequence=['dictator'],
+        app_sequence=['IntroQ', 'dictator'],
         num_demo_participants=2,
         # use_browser_bots=True
     ),
@@ -27,7 +27,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.01, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = [] #here u can gige through apps
+PARTICIPANT_FIELDS = ['financial_conditions'] #here u can gige through apps
 SESSION_FIELDS = []
 
 # ISO-639 code

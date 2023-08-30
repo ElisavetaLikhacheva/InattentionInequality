@@ -1,0 +1,32 @@
+{{ block title }}
+    Этап 2.
+{{ endblock }}
+
+{{ block content }}
+
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+        <div class="card-body">
+            <b>
+                Пожалуйста, внимательно прочитайте инструкцию ниже.
+            </b>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">На 2 этапе Вы будете объединены в пару с одним из участников
+                    случайным образом.</li>
+                <li class="list-group-item">Одному из Вас случайным образом будет назначена роль "А", другому — роль "Б".
+                    Игроку "А" будет предоставлено {{C.ENDOWMENT}}.</li>
+                <li class="list-group-item">Также игроку "А" надо выбрать, сколько из {{C.ENDOWMENT}} передать игроку "Б",
+                    а сколько — оставить себе.</li>
+                <li class="list-group-item">Каждое очко в конце игры будет переведено в рубли в пропорции:
+                    1 очко = 1 рубль.</li>
+                <li class="list-group-item"></li>
+            </ul>
+    </div>
+</div>
+
+    {{ next_button }}
+{{ endblock }}
+
+

@@ -10,10 +10,16 @@
   <div class="card-body">
 
       <p>
-          В этом раунде Вы — игрок "А".
+          В этом раунде Вы — игрок А.
       </p>
 
       <p class="p_bold">Вам необходимо определить, сколько из {{C.ENDOWMENT}}, Вы хотите передать игроку Б.</p>
+
+      {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
+      <p></p>
+      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      {{endif}}
+
       {{ formfields }}
   </div>
 </div>

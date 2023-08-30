@@ -15,9 +15,9 @@
     <div class="card-body">
         <p class="card-text"> В этом раунде Вы были игроком {{player.role}}.</p>
         {{if player.role == C.DICTATOR_ROLE}}
-        Из {{C.ENDOWMENT}} Вы передали игроку "Б" {{group.share}} .
+        Из {{C.ENDOWMENT}} Вы передали игроку Б {{group.share}} .
         {{else}}
-        Игрок "А" передал Вам {{player.payoff}}.
+        Игрок А передал Вам {{player.payoff}}.
         {{endif}}
         <p></p>
         <p class="card-text">Итого, <b>ваш бонус</b> за этот раунд составил <b> {{player.payoff}}</b>.</p>

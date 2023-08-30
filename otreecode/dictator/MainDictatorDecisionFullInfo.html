@@ -1,0 +1,32 @@
+{{ block title }}
+    Этап 2
+{{ endblock }}
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+
+
+<div class="card">
+  <div class="card-body">
+
+      <p>
+          В этом раунде Вы — игрок А.
+      </p>
+
+      <p class="p_bold">Вам необходимо определить, сколько из {{C.ENDOWMENT}}, Вы хотите передать игроку Б.</p>
+
+      {{if player.group.treatment == 2 }}
+      <p></p>
+      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      {{endif}}
+
+      {{ formfields }}
+  </div>
+</div>
+
+
+
+
+    {{ next_button }}
+
+{{ endblock }}
