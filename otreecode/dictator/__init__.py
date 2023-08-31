@@ -80,6 +80,13 @@ class C(BaseConstants):
         [8, 'Нет партии, которая могла бы представлять мои интересы'],
         [9, 'Я не интересуюсь политикой'],
     ]
+    Q_PYRAMIDS = [
+        [1, 'А'],
+        [2, 'Б'],
+        [3, 'В'],
+        [4, 'Г'],
+        [5, 'Д']
+    ]
     Q_PLACE_LIVING = [
         [1, 'Крупный город (население больше 1 миллиона человек)'],
         [2, 'Город с населением от 250 тысяч человек до миллиона'],
@@ -178,7 +185,7 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько Вы передадите игроку Б?')
+    share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько очков Вы передадите игроку Б?')
     treatment = models.IntegerField()
 
     check_info = models.BooleanField(label='Хотите ли Вы узнать?')
@@ -290,6 +297,52 @@ class Player(BasePlayer):
             [3, 'Увеличить налоговую ставку']
         ],
         widget=widgets.RadioSelect,
+        blank=True
+    )
+
+    # perception of inequality
+    russian_pyramid = models.StringField(
+        label='Как Вы считаете, какая диаграмма наиболее близка к обществу России сегодня?',
+        choices=C.Q_PYRAMIDS,
+        widget=widgets.RadioSelectHorizontal,
+        blank=True
+    )
+
+    ideal_pyramid = models.StringField(
+        label='Какой тип общества Вы бы предпочли?',
+        choices=C.Q_PYRAMIDS,
+        widget=widgets.RadioSelectHorizontal,
+        blank=True
+    )
+
+    median_income = models.IntegerField(
+        label='Как вы думаете, сколько составляет медианный ежемесячный доход в России? Укажите ответ в рублях.',
+        min=0,
+        blank=True
+    )  # slider!
+
+    poor_10 = models.IntegerField(
+        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых бедных жителей России? '
+              'Укажите ответ в рублях.',
+        min=0,
+        blank=True
+    )
+
+    rich_10 = models.IntegerField(
+        label='Как Вы думаете, какой средний ежемесячный доход у 10% самых богатых жителей России? '
+              'Укажите ответ в рублях.',
+        min=0,
+        blank=True
+    )
+
+    percent_below = models.IntegerField(
+        label='Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?',
+        min=0, max=100,
+        blank=True
+    )
+    income = models.IntegerField(
+        label='Сколько в среднем ежемесячно Вы зарабатываете? Укажите ответ в рублях.',
+        min=0,
         blank=True
     )
 
@@ -432,7 +485,7 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        treatment = itertools.cycle([1, 2, 3, 4, 5, 6])
+        treatment = itertools.cycle([2, 3, 4, 5, 6])
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
@@ -467,6 +520,7 @@ class WP2(WaitPage):
 class Detection(Page):
     form_model = 'group'
     form_fields = ['check_info',
+                   # 'avoid_info',
                    ]
 
     @staticmethod
@@ -537,6 +591,16 @@ class InequalityAssessment(Page):
                    'high_position_social_elevators',
                    ]
 
+class Perception(Page):
+    form_model = 'player'
+    form_fields = ['russian_pyramid',
+                   'ideal_pyramid',
+                   'median_income',
+                   'poor_10',
+                   'rich_10',
+                   'percent_below',
+                   'income'
+                   ]
 
 class Redistribution(Page):
     form_model = 'player'
@@ -630,7 +694,6 @@ class BackgroundInfo(Page):
         'place_living_sensible_years',
         'occupation',
         'charity',
-        'financial_conditions',
     ]
 
 
@@ -652,12 +715,13 @@ page_sequence = [
     ### here will be the questionnaire
     Demographics,
     InequalityAssessment,
+    Perception,
     Redistribution,
     PoliticalPreferences,
     Big5,
     # Risk,##
     BackgroundInfo,
-    LastQ,
+    # LastQ, бесполезный конец
     ### the end of questionnaire
     DGDecision, #should be in the end
     TheEnd,

@@ -7,10 +7,15 @@ from . import *
 
 class PlayerBot(Bot):
     def play_round(self):
-        yield IntroQ dict(year_of_birth=random.randint(1900, 2022),
+        yield InstructionGeneral,
+        yield IntroQ, dict(year_of_birth=random.randint(1900, 2022),
                           gender=random.choice([1, 2]),
-                          financial_conditions=random.randint(0, 9),
+                          financial_conditions=random.randint(1, 9),
                                )
+        yield InstructionDG,
+        yield UnderstandingDG, dict(quiz1=90,
+                                    quiz2=False,
+                                    quiz3=100)
 
         # # yield Intro, dict(income=random.randint(1, 150))
         #

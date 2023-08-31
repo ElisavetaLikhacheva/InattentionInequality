@@ -1,10 +1,19 @@
 {{ block title }}
-    IncomeQ
+    Этап 1.
 {{ endblock }}
 
 {{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
-{{formfields}}
+<div class="card">
+    <div class="card-body">
+    <p class="alert alert-primary">
+        Первый этап состоит из нескольких вопросов о Вас. Для продолжения участия, пожалуйста, ответьте на 3 вопроса.
+    </p>
+    {{formfields}}
+    </div>
+</div>
+
 
 
     {{ next_button }}

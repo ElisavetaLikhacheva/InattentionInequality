@@ -4,16 +4,30 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
         name='full_bot',
-        display_name='TOTAL random (bot), 20 players',
-        app_sequence=['diagrams', 'dictator', 'questionnaire'],
+        display_name='random (bot), 20 players',
+        app_sequence=['IntroQ', 'dictator'],
         num_demo_participants=20,
         use_browser_bots=True
     ),
     dict(
+        name='full_bot_4',
+        display_name='random (bot), 4 players',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=4,
+        use_browser_bots=True
+    ),
+    dict(
         name='NEW_DG',
-        display_name='NEW_DG',
+        display_name='NEW_DG, without bots, 2',
         app_sequence=['IntroQ', 'dictator'],
         num_demo_participants=2,
+        # use_browser_bots=True
+    ),
+    dict(
+        name='NEW_DG_8',
+        display_name='NEW_DG, without bots, 8',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=8,
         # use_browser_bots=True
     ),
 ]

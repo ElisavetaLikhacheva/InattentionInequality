@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'IntroQ'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    # ENDOWMENT = cu(100)
+    ENDOWMENT = cu(100)
     # DICTATOR_ROLE = 'A'
     # RECIPIENT_ROLE = 'Б'
 
@@ -55,12 +55,14 @@ class Player(BasePlayer):
     year_of_birth = models.IntegerField(
         label='В каком году Вы родились?',
         min=1900,
-        max=2022
+        max=2022,
+        blank=True
     )
     gender = models.StringField(
         label='Пожалуйста, укажите Ваш пол.',
         choices=C.Q_GENDER,
-        widget=widgets.RadioSelectHorizontal
+        widget=widgets.RadioSelectHorizontal,
+        blank=True
     )
     financial_conditions = models.IntegerField(
         label='Пожалуйста, выберите утверждение, которое наиболее точно описывает Ваше финансовое положение.',
@@ -71,9 +73,9 @@ class Player(BasePlayer):
     num_failed_attempts = models.IntegerField(initial=0)
     failed_too_many = models.BooleanField(initial=False)
 
-    quiz_1 = models.IntegerField(label='Предположим, Вы решили оставить 10 очков себе. Сколько очков будет передано игроку Б?')
-    quiz_2 = models.BooleanFieldField(label='Может ли игрок Б выбрать')
-    quiz_3 = models.IntegerField(label='')
+    quiz1 = models.IntegerField(label='Предположим, Вы решили оставить 10 очков себе. Сколько очков будет передано игроку Б?')
+    quiz2 = models.BooleanField(label='Может ли игрок Б выбрать передать очки игроку А?')
+    quiz3 = models.IntegerField(label='Сколько очков игрок А может распределить между собой и игроком Б?')
 
 
 # FUNCTIONS
@@ -118,30 +120,27 @@ class InstructionDG(Page):
 class UnderstandingDG(Page):
     form_model = 'player'
     form_fields = [
-        'quiz_1',
-        'quiz_2',
-        'quiz_3'
+        'quiz1',
+        'quiz2',
+        'quiz3'
     ]
 
     @staticmethod
     def error_message(player: Player, values):
-        # alternatively, you could make quiz1_error_message, quiz2_error_message, etc.
-        # but if you have many similar fields, this is more efficient.
-        solutions = dict(quiz1=90, quiz2=False, quiz3='Ottawa')
+        solutions = dict(quiz1=90, quiz2=False, quiz3=100)
 
-        # error_message can return a dict whose keys are field names and whose
-        # values are error messages
         errors = {name: 'Неверный ответ' for name in solutions if values[name] != solutions[name]}
         # print('errors is', errors)
         if errors:
             player.num_failed_attempts += 1
-            if player.num_failed_attempts >= 3:
-                player.failed_too_many = True
-                # we don't return any error here; just let the user proceed to the
-                # next page, but the next page is the 'failed' page that boots them
-                # from the experiment.
-            else:
-                return errors
+            # if player.num_failed_attempts >= 3:
+            #     player.failed_too_many = True
+            #     # we don't return any error here; just let the user proceed to the
+            #     # next page, but the next page is the 'failed' page that boots them
+            #     # from the experiment.
+            # else:
+            #     return errors
+            return errors
 
 class Failed(Page):
     @staticmethod
@@ -150,10 +149,8 @@ class Failed(Page):
 
 page_sequence = [
     InstructionGeneral,
-    # WP1,
     IntroQ,
-    # WP2,
     InstructionDG,
     UnderstandingDG,
-    Failed,
+    # Failed,
 ]

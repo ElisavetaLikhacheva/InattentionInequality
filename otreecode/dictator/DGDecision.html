@@ -1,5 +1,5 @@
 {{ block title }}
-Этап 2. Результаты раунда
+Этап 3 завершен. Благодарим за прохождение анкеты!
 {{ endblock }}
 
 {{ block content }}
@@ -9,18 +9,25 @@
 <h3></h3>
 <div class="card">
     <div class="card-header">
-    Раунд {{player.round_number}} из {{C.NUM_ROUNDS}}
+    Результаты этапа 2
     </div>
 
     <div class="card-body">
-        <p class="card-text"> В этом раунде Вы были игроком {{player.role}}.</p>
+        <p class="card-text"> Вы были игроком {{player.role}}.</p>
         {{if player.role == C.DICTATOR_ROLE}}
-        Из {{C.ENDOWMENT}} Вы передали игроку Б {{group.share}} .
+        Из {{C.ENDOWMENT}} Вы передали игроку Б {{group.share}}.
         {{else}}
         Игрок А передал Вам {{player.payoff}}.
         {{endif}}
+
+        {{if player.role == C.RECIPIENT_ROLE}}
+        {{ if player.group.treatment == 2 or player.group.treatment == 3 or player.group.treatment == 5}}
+        <p class="card-text">Игрок А знал Ваше финансовое положение при принятии решения.</p>
+        {{endif}}{{endif}}
+
         <p></p>
-        <p class="card-text">Итого, <b>ваш бонус</b> за этот раунд составил <b> {{player.payoff}}</b>.</p>
+
+        <p class="alert alert-primary">Итого, <b>ваш бонус</b> за Этап 2 составил <b> {{player.payoff}}</b>.</p>
     </div>
 </div>
 

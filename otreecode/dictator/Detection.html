@@ -1,5 +1,5 @@
 {{ block title }}
-    Вы можете узнать место партнера в распределении
+    Этап 2
 {{ endblock }}
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
@@ -25,6 +25,13 @@
         <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
         Ваш партнер будет знать о том, видели ли Вы информацию о его финансовом положении.
             {{formfield 'check_info'}}
+        </div>
+            {{endif}}
+
+            {{if player.group.treatment == 6}}
+        <div class="alert alert-primary">Информация о финансовом положении будет показана Вам на следующем экране,
+            однако, Вы можете пропустить её. Хотите ли Вы это сделать?
+            {{formfield 'avoid_info'}}
         </div>
             {{endif}}
 

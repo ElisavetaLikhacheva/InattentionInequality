@@ -1,0 +1,22 @@
+{{ block title }}
+    Этап 2.
+{{ endblock }}
+
+{{ block content }}
+
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+        <div class="card-body">
+            <b>
+                Сейчас мы зададим несколько вопросов.
+            </b>
+        {{formfields}}
+
+    </div>
+</div>
+
+    {{ next_button }}
+{{ endblock }}
+
+
