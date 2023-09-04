@@ -142,6 +142,98 @@ class C(BaseConstants):
         [2, 'Безразлично'],
         [3, 'Выигрываю']
     ]
+    Q_REGIONS = [
+        [22, 'Алтайский край'],
+        [28, 'Амурская область'],
+        [29, 'Архангельская область'],
+        [30, 'Астраханская область'],
+        [31, 'Белгородская область'],
+        [32, 'Брянская область'],
+        [33, 'Владимирская область'],
+        [34, 'Волгоградская область'],
+        [35, 'Вологодская область'],
+        [36, 'Воронежская область'],
+        [77, 'город федерального значения Москва'],
+        [78, 'город федерального значения Санкт-Петербург'],
+        [92, 'город федерального значения Севастополь'],
+        [93, 'Донецкая Народная Республика'],
+        [79, 'Еврейская автономная область'],
+        [75, 'Забайкальский край'],
+        [90, 'Запорожская область'],
+        [37, 'Ивановская область'],
+        [99, 'Иные территории, включая город и космодром Байконур'],
+        [38, 'Иркутская область'],
+        [7, 'Кабардино-Балкарская Республика'],
+        [39, 'Калининградская область'],
+        [40, 'Калужская область'],
+        [41, 'Камчатский край'],
+        [9, 'Карачаево-Черкесская Республика'],
+        [42, 'Кемеровская область - Кузбасс'],
+        [43, 'Кировская область'],
+        [44, 'Костромская область'],
+        [23, 'Краснодарский край'],
+        [24, 'Красноярский край'],
+        [45, 'Курганская область'],
+        [46, 'Курская область'],
+        [47, 'Ленинградская область'],
+        [48, 'Липецкая область'],
+        [94, 'Луганская Народная Республика'],
+        [49, 'Магаданская область'],
+        [50, 'Московская область'],
+        [51, 'Мурманская область'],
+        [83, 'Ненецкий автономный округ'],
+        [52, 'Нижегородская область'],
+        [53, 'Новгородская область'],
+        [54, 'Новосибирская область'],
+        [55, 'Омская область'],
+        [56, 'Оренбургская область'],
+        [57, 'Орловская область'],
+        [58, 'Пензенская область'],
+        [59, 'Пермский край'],
+        [25, 'Приморский край'],
+        [60, 'Псковская область'],
+        [1, 'Республика Адыгея (Адыгея)'],
+        [4, 'Республика Алтай'],
+        [2, 'Республика Башкортостан'],
+        [3, 'Республика Бурятия'],
+        [5, 'Республика Дагестан'],
+        [6, 'Республика Ингушетия'],
+        [8, 'Республика Калмыкия'],
+        [10, 'Республика Карелия'],
+        [11, 'Республика Коми'],
+        [91, 'Республика Крым'],
+        [12, 'Республика Марий Эл'],
+        [13, 'Республика Мордовия'],
+        [14, 'Республика Саха (Якутия)'],
+        [15, 'Республика Северная Осетия - Алания'],
+        [16, 'Республика Татарстан (Татарстан)'],
+        [17, 'Республика Тыва'],
+        [19, 'Республика Хакасия'],
+        [61, 'Ростовская область'],
+        [62, 'Рязанская область'],
+        [63, 'Самарская область'],
+        [64, 'Саратовская область'],
+        [65, 'Сахалинская область'],
+        [66, 'Свердловская область'],
+        [67, 'Смоленская область'],
+        [26, 'Ставропольский край'],
+        [68, 'Тамбовская область'],
+        [69, 'Тверская область'],
+        [70, 'Томская область'],
+        [71, 'Тульская область'],
+        [72, 'Тюменская область'],
+        [18, 'Удмуртская Республика'],
+        [73, 'Ульяновская область'],
+        [27, 'Хабаровский край'],
+        [86, 'Ханты-Мансийский автономный округ - Югра'],
+        [95, 'Херсонская область'],
+        [74, 'Челябинская область'],
+        [20, 'Чеченская Республика'],
+        [21, 'Чувашская Республика - Чувашия'],
+        [87, 'Чукотский автономный округ'],
+        [89, 'Ямало-Ненецкий автономный округ'],
+        [76, 'Ярославская область'],
+    ]
 
 
 
@@ -162,24 +254,25 @@ def creating_session(subsession):
 
 
 def high_position(label):
-    return models.IntegerField(label=label, choices=C.Q_4_IMPORTANT, widget=widgets.RadioSelect, blank=True)
+    return models.IntegerField(label=label, choices=C.Q_4_IMPORTANT, widget=widgets.RadioSelect)
 
 
 def scale(label):
-    return models.IntegerField(label=label, choices=range(1, 11), widget=widgets.RadioSelectHorizontal, blank=True)
+    return models.IntegerField(label=label, choices=range(1, 11), widget=widgets.RadioSelectHorizontal)
 
 
 def big5(label):
-    return models.IntegerField(label=label, choices=C.Q_BIG5, widget=widgets.RadioSelect, blank=True)
+    return models.IntegerField(label=label, choices=C.Q_BIG5, widget=widgets.RadioSelect)
+
 
 def children_live_max(player):
     return player.children
 
 
-# def big5_calculation(first, second):
-#     return 3 + (first - second) / 2
+def big5_calculation(first, second):
+    return 3 + (first - second) / 2
 
-#
+
 class Subsession(BaseSubsession):
     pass
 
@@ -199,23 +292,19 @@ class Player(BasePlayer):
         label='Укажите наивысшую оконченную ступень образования, по которой Вы имеете диплом.',
         choices=C.Q_EDUCATION,
         widget=widgets.RadioSelect,
-        blank=True
     )
     marriage = models.StringField(
         label='Вы состоите в браке?',
         choices=C.Q_MARRIAGE,
         widget=widgets.RadioSelect,
-        blank=True
     )
     children = models.IntegerField(
         label='Сколько у Вас детей?',
         min=0,
-        blank=True
     )
     children_live = models.IntegerField(
         label='Сколько из них проживает с Вами?',
         min=0,
-        blank=True
     )
 
     # q related to inequality
@@ -223,25 +312,21 @@ class Player(BasePlayer):
         label='Как Вы думаете, неравенство — серьезная проблема в России?',
         choices=C.Q_INEQUALITY_PROBLEM,
         widget=widgets.RadioSelect,
-        blank=True
     )
     income_inequality_increasing = models.StringField(
         label='Как Вы считаете, неравенство доходов возросло или снизилось в последние годы в России?',
         choices=C.Q_INCOME_INCREASING,
         widget=widgets.RadioSelect,
-        blank=True
     )
     income_satisfactory = models.StringField(
         label='Довольны ли Вы своим заработком?',
         choices=C.Q_4_YES_NO,
         widget=widgets.RadioSelectHorizontal,
-        blank=True
     )
     income_deserving = models.StringField(
         label='Как Вы считаете, люди с высоким заработком заслуживают такой уровень дохода?',
         choices=C.Q_4_YES_NO,
         widget=widgets.RadioSelectHorizontal,
-        blank=True
     )
     income_comp_parents = models.StringField(
         label='По сравнению с уровнем жизни Ваших родителей, когда они были в Вашем возрасте, '
@@ -252,13 +337,11 @@ class Player(BasePlayer):
             [3, 'Примерно также'],
         ],
         widget=widgets.RadioSelectHorizontal,
-        blank=True
     )
     unemployment_100 = models.IntegerField(
         label='Как Вы думаете, сколько человек из каждых 100 людей на данный момент не имеет работы и ищет её?',
         min=0,
-        max=100,
-        blank=True)
+        max=100)
 
     high_position_family = high_position('родиться в обеспеченной семье?')
     high_position_education = high_position('получить хорошее образование?')
@@ -275,19 +358,16 @@ class Player(BasePlayer):
             [3, 'Увеличить перераспределение']
         ],
         widget=widgets.RadioSelect,
-        blank=True
     )
     redistr_benefits_now = models.StringField(
         label='В этом году',
         choices=C.Q_BENEFITS,
         widget=widgets.RadioSelect,
-        blank=True
     )
     redistr_benefits_life = models.StringField(
         label='В течение жизни',
         choices=C.Q_BENEFITS,
         widget=widgets.RadioSelect,
-        blank=True
     )
     redistr_tax_rate = models.StringField(
         label='Хотели бы вы изменить налоговую ставку в России?',
@@ -297,7 +377,6 @@ class Player(BasePlayer):
             [3, 'Увеличить налоговую ставку']
         ],
         widget=widgets.RadioSelect,
-        blank=True
     )
 
     # perception of inequality
@@ -305,40 +384,34 @@ class Player(BasePlayer):
         label='Как Вы считаете, какая диаграмма наиболее близка к обществу России сегодня?',
         choices=C.Q_PYRAMIDS,
         widget=widgets.RadioSelectHorizontal,
-        blank=True
     )
 
     ideal_pyramid = models.StringField(
         label='Какой тип общества Вы бы предпочли?',
         choices=C.Q_PYRAMIDS,
         widget=widgets.RadioSelectHorizontal,
-        blank=True
     )
 
     median_income = models.IntegerField(
         label='Как вы думаете, сколько составляет медианный ежемесячный доход в России? Укажите ответ в рублях.',
         min=0,
-        blank=True
-    )  # slider!
+    )
 
     poor_10 = models.IntegerField(
         label='Как Вы думаете, какой средний ежемесячный доход у 10% самых бедных жителей России? '
               'Укажите ответ в рублях.',
         min=0,
-        blank=True
     )
 
     rich_10 = models.IntegerField(
         label='Как Вы думаете, какой средний ежемесячный доход у 10% самых богатых жителей России? '
               'Укажите ответ в рублях.',
         min=0,
-        blank=True
     )
 
     percent_below = models.IntegerField(
         label='Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?',
         min=0, max=100,
-        blank=True
     )
     income = models.IntegerField(
         label='Сколько в среднем ежемесячно Вы зарабатываете? Укажите ответ в рублях.',
@@ -351,7 +424,6 @@ class Player(BasePlayer):
         label='Могли бы Вы сказать, что в целом людям стоит доверять или нужно быть осторожным?',
         choices=C.Q_TRUST,
         widget=widgets.RadioSelect,
-        blank=True
     )
     trust_country = scale('Государству в целом')
     trust_political_parties = scale('Политическим партиям')
@@ -373,7 +445,6 @@ class Player(BasePlayer):
         label='За какую партию Вы голосовали на выборах в Государственную думу, если бы они состоялись сегодня?',
         choices=C.Q_PARTY,
         widget=widgets.RadioSelect,
-        blank=True
     )
     corruption = scale('В какую точку Вы поместили бы Россию на этой шкале?')
 
@@ -392,50 +463,46 @@ class Player(BasePlayer):
         label='Какую религию Вы исповедуете?',
         choices=C.Q_RELIGION,
         widget=widgets.RadioSelect,
-        blank=True
     )
     mother_education = models.StringField(
         label='Пожалуйста, укажите наивысшую оконченную ступень образования Вашей матери.',
         choices=C.Q_EDUCATION,
         widget=widgets.RadioSelect,
-        blank=True
     )
     father_education = models.StringField(
         label='Пожалуйста, укажите наивысшую оконченную ступень образования Вашего отца.',
         choices=C.Q_EDUCATION,
         widget=widgets.RadioSelect,
-        blank=True
+    )
+    region = models.StringField(
+        label='Укажите регион Вашего фактического места жительства',
+        choices=C.Q_REGIONS,
     )
     place_living_now = models.StringField(
         label='Какая из указанных категорий лучше всего описывает место, где Вы сейчас проживаете?',
         choices=C.Q_PLACE_LIVING,
         widget=widgets.RadioSelect,
-        blank=True
     )
     place_living_sensible_years = models.StringField(
         label='Какая из указанных категорий лучше всего описывает место, где Вы проживали в возрасте 16-20 лет?',
         choices=C.Q_PLACE_LIVING,
         widget=widgets.RadioSelect,
-        blank=True
     )
     occupation = models.StringField(
         label='Пожалуйста, укажите сферу Вашей деятельности.',
         choices=C.Q_OCCUPATION,
         widget=widgets.RadioSelect,
-        blank=True
     )
     charity = models.StringField(
         label='Жертвовали ли Вы за последний год деньги на благотворительность '
               'или участвовали волонтером в некоммерческих организациях?',
         choices=C.Q_CHARITY,
         widget=widgets.RadioSelect,
-        blank=True
     )
     financial_conditions = models.StringField(
         label='Пожалуйста, выберите утверждение, которое наиболее точно описывает Ваше финансовое положение.',
         choices=C.Q_FINANCIAL_CONDITIONS,
         widget=widgets.RadioSelect,
-        blank=True
     )
     # big5
     big5_1 = big5(label='сдержанный человек')
@@ -491,27 +558,6 @@ class WP1(WaitPage):
         for p in players:
             p.group.treatment = next(treatment)
 
-    # @staticmethod
-    # def after_all_players_arrive(group: Group):
-    #     treatment = itertools.cycle([1, 2, 3])
-    #     subsession = group.subsession
-    #     players = subsession.get_players()
-    #     for p in players:
-    #         if p.role == C.DICTATOR_ROLE:
-    #             if p.participant.info:
-    #                 if p.round_number > 1:
-    #                     if 'treatment' in subsession.session.config:
-    #                         p.group.treatment = subsession.session.config['treatment']
-    #                     else:
-    #                         p.group.treatment = next(treatment)
-    #                 else:
-    #                     p.group.treatment = 1
-    #             else:
-    #                 p.group.treatment = 0
-    #     if group.treatment != 3:
-    #         group.detection_recipient_place = 0
-    #     print('WP1', group.treatment)
-
 
 class WP2(WaitPage):
     pass
@@ -527,6 +573,7 @@ class Detection(Page):
     def is_displayed(player: Player):
         return player.role == C.DICTATOR_ROLE and 2 < player.group.treatment < 6
 
+
 class DetectionAvoid(Page):
     form_model = 'group'
     form_fields = ['avoid_info',
@@ -535,7 +582,6 @@ class DetectionAvoid(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.role == C.DICTATOR_ROLE and player.group.treatment == 6
-
 
 
 class WP3(WaitPage):
@@ -591,6 +637,7 @@ class InequalityAssessment(Page):
                    'high_position_social_elevators',
                    ]
 
+
 class Perception(Page):
     form_model = 'player'
     form_fields = ['russian_pyramid',
@@ -601,6 +648,7 @@ class Perception(Page):
                    'percent_below',
                    'income'
                    ]
+
 
 class Redistribution(Page):
     form_model = 'player'
@@ -671,13 +719,13 @@ class Big5(Page):
                    'finance_satisfaction'
                    ]
 
-    # @staticmethod
-    # def before_next_page(player: Player, timeout_happened):
-    #     player.big5_extraversion = big5_calculation(player.big5_6, player.big5_1)
-    #     player.big5_agreeableness = big5_calculation(player.big5_2, player.big5_7)
-    #     player.big5_conscientiousness = big5_calculation(player.big5_8, player.big5_3)
-    #     player.big5_neuroticism = big5_calculation(player.big5_9, player.big5_4)
-    #     player.big5_openness = big5_calculation(player.big5_10, player.big5_5)
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.big5_extraversion = big5_calculation(player.big5_6, player.big5_1)
+        player.big5_agreeableness = big5_calculation(player.big5_2, player.big5_7)
+        player.big5_conscientiousness = big5_calculation(player.big5_8, player.big5_3)
+        player.big5_neuroticism = big5_calculation(player.big5_9, player.big5_4)
+        player.big5_openness = big5_calculation(player.big5_10, player.big5_5)
 
 
 class Risk(Page):
@@ -690,6 +738,7 @@ class BackgroundInfo(Page):
         'religion',
         'mother_education',
         'father_education',
+        'region',
         'place_living_now',
         'place_living_sensible_years',
         'occupation',

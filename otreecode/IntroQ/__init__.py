@@ -28,7 +28,7 @@ class C(BaseConstants):
         [6, 'На новую машину денег хватает, но не хватает на небольшую квартиру'],
         [7, 'На небольшую квартиру денег хватает, но не хватает на большую квартиру в хорошем районе'],
         [8, 'Материальных затруднений не испытываем, при необходимости есть возможность приобрести квартиру, дом'],
-        [9, 'Затрудняюсь ответить'],
+        # [9, 'Затрудняюсь ответить'],
     ]
 
 
@@ -54,7 +54,7 @@ class Player(BasePlayer):
         # blank=True
     )
     financial_conditions = models.IntegerField(
-        label='Пожалуйста, выберите утверждение, которое наиболее точно описывает Ваше финансовое положение.',
+        label='Пожалуйста, выберите утверждение, которое наиболее точно описывает финансовое положение Вашей семьи.',
         choices=C.Q_FINANCIAL_CONDITIONS,
         widget=widgets.RadioSelect
     )
@@ -62,7 +62,7 @@ class Player(BasePlayer):
     num_failed_attempts = models.IntegerField(initial=0)
     failed_too_many = models.BooleanField(initial=False)
 
-    quiz1 = models.IntegerField(label='Предположим, Вы решили оставить 10 очков себе. Сколько очков будет передано игроку Б?')
+    quiz1 = models.IntegerField(label='Предположим, игрок А решили оставить 10 очков себе. Сколько очков будет передано игроку Б?')
     quiz2 = models.BooleanField(label='Может ли игрок Б выбрать передать очки игроку А?')
     quiz3 = models.IntegerField(label='Сколько очков игрок А может распределить между собой и игроком Б?')
 
@@ -90,14 +90,6 @@ class IntroQ(Page):
         participant.financial_conditions = player.field_display('financial_conditions')
 
 
-class WP1(WaitPage):
-    pass
-
-
-class WP2(WaitPage):
-    pass
-
-
 class InstructionGeneral(Page):
     pass
 
@@ -122,24 +114,11 @@ class UnderstandingDG(Page):
         if errors:
             player.num_failed_attempts += 1
             return errors
-            # if player.num_failed_attempts >= 3:
-            #     player.failed_too_many = True
-            #     # we don't return any error here; just let the user proceed to the
-            #     # next page, but the next page is the 'failed' page that boots them
-            #     # from the experiment.
-            # else:
-            #     return errors
 
-
-# class Failed(Page):
-#     @staticmethod
-#     def is_displayed(player: Player):
-#         return player.failed_too_many
 
 page_sequence = [
     InstructionGeneral,
     IntroQ,
     InstructionDG,
     UnderstandingDG,
-    # Failed,
 ]
