@@ -18,17 +18,6 @@ class C(BaseConstants):
         [1, 'Мужской'],
         [2, 'Женский'],
     ]
-    # Q_FINANCIAL_CONDITIONS = [
-    #     'Денег не хватает даже на питание',
-    #     'На питание денег хватает, но не хватает на покупку одежды и обуви',
-    #     'На покупку одежды и обуви денег хватает, но не хватает на покупку мелкой бытовой техники',
-    #     'На покупку мелкой бытовой техники денег хватает, но не хватает на покупку крупной бытовой техники',
-    #     'Денег хватает на покупку крупной бытовой техники, но не хватает на новую машину',
-    #     'На новую машину денег хватает, но не хватает на небольшую квартиру',
-    #     'На небольшую квартиру денег хватает, но не хватает на большую квартиру в хорошем районе',
-    #     'Материальных затруднений не испытываем, при необходимости есть возможность приобрести квартиру, дом',
-    #     'Затрудняюсь ответить'
-    # ]
 
     Q_FINANCIAL_CONDITIONS = [
         [1, 'Денег не хватает даже на питание'],
@@ -56,13 +45,13 @@ class Player(BasePlayer):
         label='В каком году Вы родились?',
         min=1900,
         max=2022,
-        blank=True
+        # blank=True
     )
     gender = models.StringField(
         label='Пожалуйста, укажите Ваш пол.',
         choices=C.Q_GENDER,
         widget=widgets.RadioSelectHorizontal,
-        blank=True
+        # blank=True
     )
     financial_conditions = models.IntegerField(
         label='Пожалуйста, выберите утверждение, которое наиболее точно описывает Ваше финансовое положение.',
@@ -130,9 +119,9 @@ class UnderstandingDG(Page):
         solutions = dict(quiz1=90, quiz2=False, quiz3=100)
 
         errors = {name: 'Неверный ответ' for name in solutions if values[name] != solutions[name]}
-        # print('errors is', errors)
         if errors:
             player.num_failed_attempts += 1
+            return errors
             # if player.num_failed_attempts >= 3:
             #     player.failed_too_many = True
             #     # we don't return any error here; just let the user proceed to the
@@ -140,12 +129,12 @@ class UnderstandingDG(Page):
             #     # from the experiment.
             # else:
             #     return errors
-            return errors
 
-class Failed(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.failed_too_many
+
+# class Failed(Page):
+#     @staticmethod
+#     def is_displayed(player: Player):
+#         return player.failed_too_many
 
 page_sequence = [
     InstructionGeneral,
