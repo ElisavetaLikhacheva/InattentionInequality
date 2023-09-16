@@ -522,7 +522,7 @@ class Player(BasePlayer):
     big5_neuroticism = models.FloatField()
     big5_openness = models.FloatField()
 
-    # just
+    # justified
     just_allowance = scale('Получение государственных пособий, на которые человек не имеет права ')
     just_freeride = scale('Проезд без оплаты в общественном транспорте')
     just_thieving = scale('Кража чужой собственности')
@@ -530,6 +530,16 @@ class Player(BasePlayer):
     just_bribe = scale('Получение взятки, используя служебное положение')
     just_violence = scale('Насилие против других людей ')
     just_political_violence = scale('Использование насилия в политической борьбе ')
+
+    #risk
+    risk_general = scale('Насколько Вы любите рисковать в целом?')
+    risk_finance = scale('В финансовых вопросах')
+    risk_sport = scale('В свободное время и во время занятий спортом')
+    risk_profession = scale('В вашей профессии')
+    risk_health = scale('В том, что касается вашего здоровья')
+    risk_strangers = scale('В отношениях с незнакомыми людьми')
+    risk_drive = scale('Во время езды за рулем')
+
 
     # personal
     freedom_choice = scale('')
@@ -729,7 +739,16 @@ class Big5(Page):
 
 
 class Risk(Page):
-    pass
+    form_model = 'player'
+    form_fields = [
+        'risk_general',
+        'risk_finance',
+        'risk_sport',
+        'risk_profession',
+        'risk_health',
+        'risk_strangers',
+        'risk_drive',
+    ]
 
 
 class BackgroundInfo(Page):
@@ -761,16 +780,15 @@ page_sequence = [
     WP2,
     MainDictatorDecision,
     ResultsWaitPage,
-    ### here will be the questionnaire
+    ### questionnaire
     Demographics,
     InequalityAssessment,
     Perception,
     Redistribution,
     PoliticalPreferences,
     Big5,
-    # Risk,##
+    Risk,##
     BackgroundInfo,
-    # LastQ, бесполезный конец
     ### the end of questionnaire
     DGDecision, #should be in the end
     TheEnd,

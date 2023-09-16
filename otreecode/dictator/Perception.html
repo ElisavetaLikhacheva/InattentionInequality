@@ -1,9 +1,9 @@
 {{ block title }}
     Этап 3. Анкета
 {{ endblock }}
+
 {{ block content }}
 <link rel="stylesheet" href="{{static 'global/main.css'}}">
-
 
 <div class="card">
     <div class="card-body">
@@ -36,16 +36,28 @@
             <li class="list-group-item">{{formfield 'rich_10'}}</li>
             <li class="list-group-item">
                 <label> Как Вы думаете, какой процент людей в России зарабатывает меньше, чем Вы?
-                    Потяните ползунок, чтобы установить значение.
-                <br>
-                <input type="range" name="percent_below" min="0" max="100" oninput="updateDescription(this)" >
-                </label>
+                    Потяните ползунок, чтобы установить значение.</label>
+                <div class="slidecontainer">
+                    <input type="range" name="percent_below" class="slider" min="0" max="100"
+                           oninput="updateDescription(this)" >
+                        <div class="sliderticks">
+                            <p>0</p>
+                            <p>100</p>
+                        </div>
+                </div>
+
                 <p id="percent_below"></p>
+
             </li>
             <li class="list-group-item">
-                <p class="alert alert-primary">Среднедушевой доход = Общий доход семьи за месяц / Количество членов семьи.
-                    Например, семья состоит из 3 человек:
-                </p>
+                <div class="alert alert-primary">
+                    <b>Среднедушевой доход = Общий доход семьи за месяц / Количество членов семьи.</b>
+
+                    <p>Например, семья состоит из 3 человек: два родителя и ребенок до 3 лет. Один из родителей получает
+                    заработную плату в размере 25 000 рублей, а также семья получает выплаты за рождение первого ребенка,
+                    которые составляют 11 000 рублей в месяц. Тогда общий доход семьи равен 36 000 рублей,
+                    а среднедушевой будет вычислен так: 36 000 / 3 = 12 000 рублей.</p>
+                </div>
 
                 {{formfield 'income'}}
                 </li>
@@ -60,4 +72,62 @@
         description.innerText = `Я считаю, что ${percent_below}% людей в России зарабатывают меньше, чем я.`
     }
 </script>
+
+<style>
+    .slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 15px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #0D6EFDFF;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #0D6EFDFF;
+  cursor: pointer;
+}
+.sliderticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.sliderticks p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 1px;
+  background: #D3D3D3;
+  height: 10px;
+  line-height: 40px;
+  margin: 0 0 20px 0;
+}
+</style>
 {{ endblock }}
