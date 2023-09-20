@@ -32,7 +32,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     russian_pyramid = models.StringField(
-        label='Как Вы считаете, какая диаграмма наиболее близка к обществу России сегодня?',
+        label='Как Вы считаете, какая диаграмма лучше остальных описывает распределение доходов в России сегодня?',
         choices=C.Q_PYRAMIDS,
         widget=widgets.RadioSelectHorizontal
     )
