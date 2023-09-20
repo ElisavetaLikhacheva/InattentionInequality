@@ -79,7 +79,8 @@ class Player(BasePlayer):
 class IntroQ(Page):
     form_model = 'player'
     form_fields = ['year_of_birth',
-                   'gender',UnderstandingDG
+                   'gender',
+                   'UnderstandingDG',
                    'financial_conditions',
                    ]
 
