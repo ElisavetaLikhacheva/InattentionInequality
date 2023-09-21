@@ -25,6 +25,10 @@
       {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
       <p></p>
       <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      <p>
+          Другой участник в вашей паре проинформирован о том, что Вы знаете его финансовое положение.
+      </p>
+    
       {{endif}}
 
       {{ formfields }}
