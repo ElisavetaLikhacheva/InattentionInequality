@@ -6,30 +6,26 @@
 
 <div class="card">
     <div class="card-body">
-
             {{if player.group.treatment == 3}}
         <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
-        Ваш партнер будет знать о том, знаете ли Вы его финансовое положение.
+        </div>
+            {{formfield 'check_info'}}
+            {{endif}}
+
+            {{if player.group.treatment == 4}}
+        <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
+            Ваш партнер <b> будет знать </b> о том, видели ли Вы его финансовое положение.
         </div>
         {{formfield 'check_info'}}
 
             {{endif}}
 
-            {{if player.group.treatment == 4}}
+            {{if player.group.treatment == 5}}
         <div class="alert alert-primary"> Вы можете узнать финансовое положение Вашего партнера.
         Ваш партнер НЕ узнает о том, знаете ли Вы его финансовое положение.
         </div>
         {{formfield 'check_info'}}
             {{endif}}
-
-            {{if player.group.treatment == 5}}
-        <div class="alert alert-primary">Вы можете узнать финансовое положение Вашего партнера.
-        Ваш партнер будет знать о том, видели ли Вы информацию о его финансовом положении.
-        </div>
-            {{formfield 'check_info'}}
-            {{endif}}
-
-
 
         {{ next_button }}
     </div>
