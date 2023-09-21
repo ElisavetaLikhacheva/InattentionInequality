@@ -557,7 +557,7 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        treatment = itertools.cycle([5, 6])
+        treatment = itertools.cycle([1, 2, 3, 4, 5, 6])
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
