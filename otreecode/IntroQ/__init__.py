@@ -80,6 +80,7 @@ class IntroQ(Page):
     form_model = 'player'
     form_fields = ['year_of_birth',
                    'gender',
+                   'UnderstandingDG',
                    'financial_conditions',
                    ]
 
