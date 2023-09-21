@@ -608,6 +608,10 @@ class MainDictatorDecision(Page):
         return dict(other_player_financial_conditions=other_player_financial_conditions,
                     )
 
+class Receiver_main_decision(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.role == C.RECIPIENT_ROLE
 
 class ResultsWaitPage(WaitPage):
     after_all_players_arrive = 'set_payoffs'
@@ -773,6 +777,7 @@ page_sequence = [
     Detection,
     DetectionAvoid,
     WP2,
+    Receiver_main_decision,
     MainDictatorDecision,
     ResultsWaitPage,
     ### questionnaire
