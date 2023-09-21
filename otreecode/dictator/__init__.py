@@ -613,6 +613,14 @@ class Receiver_main_decision(Page):
     def is_displayed(player: Player):
         return player.role == C.RECIPIENT_ROLE
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        other_player_financial_conditions = other_player(player).participant.financial_conditions
+
+        return dict(other_player_financial_conditions=other_player_financial_conditions,
+                    )
+
+
 class ResultsWaitPage(WaitPage):
     after_all_players_arrive = 'set_payoffs'
 
