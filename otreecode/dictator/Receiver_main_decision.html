@@ -1,1 +1,39 @@
+{{ block title }}
+    Этап 2
+{{ endblock }}
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
 
+
+
+<div class="card">
+  <div class="card-body">
+
+      <p>
+          Вы объединены в пару с одним из участников, Вам досталась роль участника Б.
+      </p>
+
+      <div class="alert alert-secondary">
+            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
+        </div>
+    <p>
+          По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.
+      </p>
+      
+      <p> Сейчас участник А определяет, сколько из {{C.ENDOWMENT}} он передаст Вам.</p>
+
+      {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
+      <p></p>
+      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      {{endif}}
+
+      {{ formfields }}
+  </div>
+</div>
+
+
+
+
+    {{ next_button }}
+
+{{ endblock }}
