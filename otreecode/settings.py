@@ -24,11 +24,46 @@ SESSION_CONFIGS = [
         # use_browser_bots=True
     ),
     dict(
-        name='NEW_DG_8',
-        display_name='NEW_DG, without bots, 8',
+        name='treat_1',
+        display_name='Treatment 1',
         app_sequence=['IntroQ', 'dictator'],
-        num_demo_participants=8,
-        # use_browser_bots=True
+        num_demo_participants=2,
+        default_treatment=1,
+    ),
+    dict(
+        name='treat_2',
+        display_name='Treatment 2',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=2,
+    ),
+    dict(
+        name='treat_3',
+        display_name='Treatment 3',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=3,
+    ),
+    dict(
+        name='treat_4',
+        display_name='Treatment 4',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=4,
+    ),
+    dict(
+        name='treat_5',
+        display_name='Treatment 5',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=5,
+    ),
+    dict(
+        name='treat_6',
+        display_name='Treatment 6',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=6,
     ),
 ]
 

@@ -20,18 +20,6 @@
         Участник А передал Вам {{player.payoff}}.
         {{endif}}
 
-        {{if player.role == C.RECIPIENT_ROLE}}
-        {{ if player.group.treatment == 2 or player.group.treatment == 3 or player.group.treatment == 4}}
-        <p class="card-text">Участник А знал Ваше финансовое положение при принятии решения.</p>
-        {{endif}}
-        {{if player.group.treatment == 2}}
-        <div class="alert alert-secondary">
-            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
-        </div>
-        <div class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</div>
-        {{endif}}
-        {{endif}}
-
         <p></p>
 
         <p class="alert alert-primary">Итого, <b>ваш бонус</b> за Этап 2 составил <b> {{player.payoff}}</b>.</p>

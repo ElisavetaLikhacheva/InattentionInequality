@@ -25,11 +25,9 @@ class C(BaseConstants):
         [2, 'Основное общее образование (9 классов)'],
         [3, 'Среднее (полное) общее образование (11 классов)'],
         [4, 'Среднее профессиональное образование (колледж/техникум)'],
-        [5, 'Основное общее образование (9 классов)'],
-        [6, 'Бакалавриат'],
-        [7, 'Cпециалитет, магистратура'],
-        [8, 'Аспирантура'],
-        [9, 'Нет'],
+        [5, 'Неоконченное высшее образование'],
+        [6, 'Высшее образование (бакалавриат, специалитет)'],
+        [7, 'Два и более высших образования, аспирантура'],
     ]
     Q_MARRIAGE = [
         [1, 'Никогда не состоял(a)'],
@@ -64,22 +62,20 @@ class C(BaseConstants):
         [4, 'Совсем неважно'],
     ]
     Q_TRUST = [
-        [1, 'Почти всегда людям можно доверять'],
-        [2, 'Обычно людям можно доверять'],
-        [3, 'Обычно стоит быть осторожным в общении с людьми'],
-        [4, 'Почти всегда нужно быть осторожным в общении с людьми'],
+        [1, 'Большинству людей можно вполне доверять'],
+        [2, 'Нужно быть очень осторожным с другими людьми'],
     ]
-    Q_PARTY = [
-        [1, 'Единая Россия'],
-        [2, 'Коммунистическая партия Российской Федерации (КПРФ)'],
-        [3, 'Справедливая Россия — За правду (СРЗП)'],
-        [4, 'Либерально-демократическая партия России (ЛДПР)'],
-        [5, 'Новые люди'],
-        [6, 'Российская объединённая демократическая партия «Яблоко»'],
-        [7, 'Другая зарегистрированная партия'],
-        [8, 'Нет партии, которая могла бы представлять мои интересы'],
-        [9, 'Я не интересуюсь политикой'],
-    ]
+    # Q_PARTY = [
+    #     [1, 'Единая Россия'],
+    #     [2, 'Коммунистическая партия Российской Федерации (КПРФ)'],
+    #     [3, 'Справедливая Россия — За правду (СРЗП)'],
+    #     [4, 'Либерально-демократическая партия России (ЛДПР)'],
+    #     [5, 'Новые люди'],
+    #     [6, 'Российская объединённая демократическая партия «Яблоко»'],
+    #     [7, 'Другая зарегистрированная партия'],
+    #     [8, 'Нет партии, которая могла бы представлять мои интересы'],
+    #     [9, 'Я не интересуюсь политикой'],
+    # ]
     Q_PYRAMIDS = [
         [1, 'А'],
         [2, 'Б'],
@@ -88,11 +84,12 @@ class C(BaseConstants):
         [5, 'Д']
     ]
     Q_PLACE_LIVING = [
-        [1, 'Крупный город (население больше 1 миллиона человек)'],
+        [1, 'Крупный город с населением больше 1 миллиона человек'],
         [2, 'Город с населением от 250 тысяч человек до миллиона'],
-        [3, 'Небольшой город с населением до 250 тысяч человек'],
+        [3, 'Город с населением до 250 тысяч человек'],
         [4, 'Город с населением от 50 до 250 тысяч человек'],
-        [5, 'Населенный пункт до 50 тысяч человек'],
+        [5, 'Населенный пункт от 10 до 50 тысяч человек'],
+        [6, 'Населенный пункт до 10 тысяч человек'],
     ]
     Q_OCCUPATION = [
         [1, 'Государственная служба'],
@@ -234,7 +231,26 @@ class C(BaseConstants):
         [2, 'Безразлично'],
         [3, 'Выигрываю']
     ]
-
+    Q_CHURCH_ATTENDANCE = [
+        [1, 'Вообще не бываю'],
+        [2, '1 раз в месяц или реже'],
+        [3, '2-3 раза в месяц'],
+        [4, '4 раза в месяц или чаще'],
+        [5, 'Без ответа, я атеист']
+    ]
+    # Q_IS_OCCUPIED_CHOICES = [[False, _('Нет')], [True, _('Да')]]
+    Q_OCCUPATION_PARENT_CHOICES = [
+        [1, "Руководители"],
+        [2, "Специалисты высшего уровня квалификации"],
+        [3, "Специалисты среднего уровня квалификации"],
+        [4, "Служащие, занятые подготовкой и оформлением документации, учетом и обслуживанием"],
+        [5, "Работники сферы обслуживания и торговли, охраны граждан и собственности"],
+        [6, "Квалифицированные работники сельского и лесного хозяйства, рыбоводства и рыболовства"],
+        [7, "Квалифицированные рабочие промышленности, строительства, транспорта и рабочие родственных занятий"],
+        [8, "Операторы производственных установок и машин, сборщики и водители"],
+        [9, "Неквалифицированные рабочие"],
+        [10, "Военнослужащие"],
+    ]
 
 
 # FUNCTIONS
@@ -258,7 +274,7 @@ def high_position(label):
 
 
 def scale(label):
-    return models.IntegerField(label=label, choices=range(1, 11), widget=widgets.RadioSelectHorizontal)
+    return models.IntegerField(label=label, choices=range(0, 11), widget=widgets.RadioSelectHorizontal)
 
 
 def big5(label):
@@ -432,6 +448,11 @@ class Player(BasePlayer):
     trust_television = scale('Телевидение')
     trust_mass_media = scale('Новостные средства массовой информации')
 
+    trust_family = scale('Вашей семье')
+    trust_neighbours = scale('Вашим соседям')
+    trust_acquant = scale('Людям, с которыми Вы лично знакомы')
+    trust_stranger = scale('Людям, с которыми Вы не знакомы')
+
     social_mobility = scale('Как Вы считаете, насколько хорошо работают социальные лифты в России?')
     politics_interest = scale('Можете ли Вы описать себя как человека, который интересуется политикой? ')
 
@@ -441,12 +462,12 @@ class Player(BasePlayer):
     competition = scale('')
     left_right = scale('')
 
-    party_vote = models.StringField(
-        label='За какую партию Вы голосовали на выборах в Государственную думу, если бы они состоялись сегодня?',
-        choices=C.Q_PARTY,
-        widget=widgets.RadioSelect,
-    )
-    corruption = scale('В какую точку Вы поместили бы Россию на этой шкале?')
+    # party_vote = models.StringField(
+    #     label='За какую партию Вы голосовали на выборах в Государственную думу, если бы они состоялись сегодня?',
+    #     choices=C.Q_PARTY,
+    #     widget=widgets.RadioSelect,
+    # )
+    # corruption = scale('В какую точку Вы поместили бы Россию на этой шкале?')
 
     democracy_redistribution = scale('Правительство берет налоги с богатых для поддержки бедных')
     democracy_elections = scale('Люди выбирают политических лидеров на свободных выборах')
@@ -456,12 +477,17 @@ class Player(BasePlayer):
     democracy_gender_equality = scale('У мужчин и женщин равные права')
 
     important_democracy = scale('Насколько для Вас важно жить в демократической стране?')
-    Russia_democracy = scale('Как Вы считаете, насколько демократично управляется Россия в настоящее время?')
+    # Russia_democracy = scale('Как Вы считаете, насколько демократично управляется Россия в настоящее время?')
 
     # background
     religion = models.StringField(
         label='Какую религию Вы исповедуете?',
         choices=C.Q_RELIGION,
+        widget=widgets.RadioSelect,
+    )
+    church_attendance = models.StringField(
+        label='Как часто Вы посещаете храм?',
+        choices=C.Q_CHURCH_ATTENDANCE,
         widget=widgets.RadioSelect,
     )
     mother_education = models.StringField(
@@ -478,6 +504,9 @@ class Player(BasePlayer):
         label='Укажите регион Вашего фактического места жительства',
         choices=C.Q_REGIONS,
     )
+    regional_income = models.IntegerField(
+        label='Как Вы считаете, каков среднемесячный доход жителей Вашего региона? Напишите, пожалуйста, Вашу оценку (в рублях в месяц)',
+    )
     place_living_now = models.StringField(
         label='Какая из указанных категорий лучше всего описывает место, где Вы сейчас проживаете?',
         choices=C.Q_PLACE_LIVING,
@@ -488,9 +517,16 @@ class Player(BasePlayer):
         choices=C.Q_PLACE_LIVING,
         widget=widgets.RadioSelect,
     )
+    is_occupied = models.BooleanField(label="В настоящее время вы трудоустроены?",
+                                      widget=widgets.RadioSelectHorizontal,
+                                      )
+    self_employed = models.BooleanField(label="Являетесь ли вы в настоящее время самозанятым?",
+                                        widget=widgets.RadioSelectHorizontal
+                                        )
+
     occupation = models.StringField(
-        label='Пожалуйста, укажите сферу Вашей деятельности.',
-        choices=C.Q_OCCUPATION,
+        label='Пожалуйста, укажите к какой сфере относится Ваша деятельность.',
+        choices=C.Q_OCCUPATION_PARENT_CHOICES,
         widget=widgets.RadioSelect,
     )
     charity = models.StringField(
@@ -561,7 +597,10 @@ class WP1(WaitPage):
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
-            p.group.treatment = next(treatment)
+            if 'default_treatment' in subsession.session.config:
+                p.group.treatment = subsession.session.config['default_treatment']
+            else:
+                p.group.treatment = next(treatment)
 
 
 class WP2(WaitPage):
@@ -688,6 +727,11 @@ class PoliticalPreferences(Page):
         'trust_television',
         'trust_mass_media',
 
+        'trust_family',
+        'trust_neighbours',
+        'trust_acquant',
+        'trust_stranger',
+
         'social_mobility',
         'politics_interest',
 
@@ -696,8 +740,8 @@ class PoliticalPreferences(Page):
         'income_equality',
         'competition',
         'left_right',
-        'party_vote',
-        'corruption',
+        # 'party_vote',
+        # 'corruption',
 
         'democracy_redistribution',
         'democracy_elections',
@@ -707,7 +751,7 @@ class PoliticalPreferences(Page):
         'democracy_gender_equality',
 
         'important_democracy',
-        'Russia_democracy',
+        # 'Russia_democracy',
     ]
 
 
@@ -762,11 +806,15 @@ class BackgroundInfo(Page):
     form_model = 'player'
     form_fields = [
         'religion',
+        'church_attendance',
         'mother_education',
         'father_education',
         'region',
+        'regional_income',
         'place_living_now',
         'place_living_sensible_years',
+        'is_occupied',
+        'self_employed',
         'occupation',
         'charity',
     ]

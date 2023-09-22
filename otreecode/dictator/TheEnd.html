@@ -1,13 +1,14 @@
 {{ block title }}
-    Результаты
+    Спасибо за участие!
 {{ endblock }}
 
 {{ block content }}
-
+<div class="card">
+    <div class="card-body">
+        <p class="card-text"> Ваш код участника: {{player.participant.code}}.</p>
+    </div>
+</div>
 {{formfields}}
-
-
-    {{ next_button }}
 {{ endblock }}
 
 

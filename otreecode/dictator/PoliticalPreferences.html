@@ -16,14 +16,14 @@
             <li class="list-group-item">
                 <b>Доверяете ли Вы следующим организациям?</b>
                 <p>
-                    Выберите один из вариантов для каждого утверждения, где 1 — "абсолютно не доверяю",
+                    Выберите один из вариантов для каждого утверждения, где 0 — "абсолютно не доверяю",
                     а 10 — "абсолютно доверяю". Также Вы можете выбрать значение между ними.
                 </p>
 
                 <table class="table">
                     <tr class="table-primary">
                         <th></th>
-                        {{for i in range(1, 11) }}
+                        {{for i in range(0, 11) }}
                         <th>{{i}} </th>
                         {{endfor}}
                     </tr>
@@ -68,6 +68,52 @@
                 </table>
             </li>
 
+            <li class="list-group-item">
+                <b>Доверяете ли Вы следующим организациям?</b>
+                <p>
+                    Выберите один из вариантов для каждого утверждения, где 0 — "абсолютно не доверяю",
+                    а 10 — "абсолютно доверяю". Также Вы можете выбрать значение между ними.
+                </p>
+
+                <table class="table">
+                    <tr class="table-primary">
+                        <th></th>
+                        {{for i in range(0, 11) }}
+                        <th>{{i}} </th>
+                        {{endfor}}
+                    </tr>
+
+                    <tr>
+                        <th>{{ form.trust_family.label }}</th>
+                        {{ for choice in form.trust_family }}
+                        <td>{{ choice }} </td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th>{{ form.trust_neighbours.label }}</th>
+                        {{ for choice in form.trust_neighbours }}
+                        <td>{{ choice }} </td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th>{{ form.trust_acquant.label }}</th>
+                        {{ for choice in form.trust_acquant }}
+                        <td>{{ choice }} </td>
+                        {{ endfor }}
+                    </tr>
+                    <tr>
+                        <th>{{ form.trust_stranger.label }}</th>
+                        {{ for choice in form.trust_stranger }}
+                        <td>{{ choice }} </td>
+                        {{ endfor }}
+                    </tr>
+                </table>
+            </li>
+
+
+
+
+
             <li class="list-group-item"> {{form.social_mobility.label}}
                 <table class="table">
                         <td>Социальные лифты совсем не работают</td>
@@ -91,12 +137,12 @@
             </li>
             <li class="list-group-item">
                 <p>Далее приведены некоторые высказывания, которые могли бы описать Ваши взгляды,
-                где 1 — полное согласие с фразой слева, а 10 — с высказыванием справа.
+                где 0 — полное согласие с фразой слева, а 10 — с высказыванием справа.
                 Для каждого утверждения выбирите одно из значений. </p>
                 <table class="table">
                 <tr class="table-primary">
                     <th></th>
-                    {{for i in range(1, 11) }}
+                    {{for i in range(0, 11) }}
                     <th>{{i}} </th>
                     {{endfor}}
                     <th></th>
@@ -133,42 +179,25 @@
             </li>
             <li class="list-group-item">
                 <p>Говоря о политике, люди используют слова “левый” и “правый”.
-                Если говорить в целом, куда бы Вы поместили свои взгляды на этой шкале? Где 1 означает,
+                Если говорить в целом, куда бы Вы поместили свои взгляды на этой шкале? Где 0 означает,
                 что Вам близки левые взгляды, а 10 — правые. </p>
                 <table class="table">
-                        <td>Лево</td>
+                        <td>Левые</td>
                         {{ for choice in form.left_right }}
                         <td>{{ choice }} <p>{{choice.label}}</p></td>
                         {{ endfor }}
-                        <td>Право</td>
+                        <td>Правые</td>
                     </tr>
                 </table>
             </li>
-            <li class="list-group-item">
-                <p>Теперь нам хотелось бы узнать Ваше мнение о коррупции – ситуациях, когда люди дают взятки,
-                дарят подарки или делают одолжения другим для того, чтобы были решены их вопросы или оказаны услуги,
-                на которые они и так имеют право.
-                "1" означает, что в стране "совсем нет коррупции", а "10" - что «коррупция в России повсеместна».
-                Вы можете выбрать любое значение шкалы в соответствии с Вашим собственным мнением.</p>
-                <p>{{form.corruption.label }}</p>
-                <table class="table">
-                        <td>Совсем нет коррупции</td>
-                        {{ for choice in form.corruption }}
-                        <td>{{ choice }} <p>{{choice.label}}</p></td>
-                        {{ endfor }}
-                        <td>Коррупция в России повсеместно</td>
-                    </tr>
-                </table>
-            </li>
-            <li class="list-group-item">{{formfield 'party_vote'}}</li>
             <li class="list-group-item">
                 <p>Многие условия хотя и желательны, но не являются принципиально важными для демократии.
                     На Ваш взгляд, насколько важным условием демократии являются следующие утверждения?
-                    Оцените каждое из утверждение от 1 до 10, где 1 — совершенно неважно, а 10 — принципиально важно.</p>
+                    Оцените каждое из утверждение от 0 до 10, где 0 — совершенно неважно, а 10 — принципиально важно.</p>
                 <table class="table">
             <tr class="table-primary">
                 <th></th>
-                {{for i in range(1, 11) }}
+                {{for i in range(0, 11) }}
                 <th>{{i}} </th>
                 {{endfor}}
             </tr>
@@ -223,17 +252,6 @@
                 </table>
             </li>
 
-            <li class="list-group-item">
-                <p> {{form.Russia_democracy.label }}</p>
-                <table class="table">
-                        <td>Совсем не демократично</td>
-                        {{ for choice in form.Russia_democracy }}
-                        <td>{{ choice }} <p>{{choice.label}}</p></td>
-                        {{ endfor }}
-                        <td>Очень демократично</td>
-                    </tr>
-                </table>
-            </li>
         </ul>
     </div>
 </div>
