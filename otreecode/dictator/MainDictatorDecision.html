@@ -16,19 +16,38 @@
       <div class="alert alert-secondary">
             Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
         </div>
-    <p>
-          По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.
-      </p>
+      {{if player.group.treatment == 2}}
+      <p>По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.</p>
+      {{endif}}
       
       <p>Вам необходимо определить, сколько из {{C.ENDOWMENT}} Вы хотите передать участнику Б.</p>
 
       {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
       <p></p>
       <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
-      <p>
-          Другой участник проинформирован о том, Что Вы знаете его финансовое положение.
-      </p>
       {{endif}}
+
+      {{if player.group.treatment == 1}}
+      <p>Другой участник НЕ узнает Ваше финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 2}}
+      <p>Другой участник проинформирован о том, Что Вы знаете его финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 4 and player.group.field_maybe_none('check_info') == 1}}
+      <p>Другой участник знает о том, что Вы решили узнать его финансовое положение перед тем,
+          как принять решение о том, сколько очков передать ему.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 5 and player.group.field_maybe_none('check_info') == 1}}
+      <p>Другой участник НЕ знает Ваше финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 6 and player.group.field_maybe_none('check_info') == 1}}
+      <p>Другой участник НЕ знает Ваше финансовое положение.</p>
+      {{endif}}
+
 
       {{ formfields }}
   </div>

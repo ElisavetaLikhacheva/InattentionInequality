@@ -16,20 +16,32 @@
       <div class="alert alert-secondary">
             Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
         </div>
-    <p>
-          По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.
-      </p>
+
+      {{if player.group.treatment == 2}}
+      <p> По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.</p>
+      {{endif}}
       
       <p> Сейчас участник А определяет, сколько из {{C.ENDOWMENT}} он передаст Вам.</p>
 
-      {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
+      {{if player.group.treatment == 2}}
       <p></p>
       <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
-      <p>
-          Другой участник проинформирован о том, что Вы знаете его финансовое положение.
-      </p>
-    
       {{endif}}
+
+      {{if player.group.treatment == 1}}
+      <p>Другой участник НЕ узнает Ваше финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 2}}
+      <p>Другой участник проинформирован о том, что Вы знаете его финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 4 and player.group.field_maybe_none('check_info') == 1}}
+      <p>Другой участник решил узнать Ваше финансовое положение перед тем,
+          как принять решение о том, сколько очков передать Вам.</p>
+      {{endif}}
+    
+
 
       {{ formfields }}
   </div>
