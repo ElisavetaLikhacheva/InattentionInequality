@@ -14,18 +14,20 @@
       </p>
 
       <div class="alert alert-secondary">
-            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
+            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}},
+          что означает, что <b> у Вас есть {{player.inc_endowment}}</b>
         </div>
 
       {{if player.group.treatment == 2}}
       <p> По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.</p>
       {{endif}}
       
-      <p> Сейчас участник А определяет, сколько из {{C.ENDOWMENT}} он передаст Вам.</p>
+      <p> Сейчас участник А определяет, сколько из {{C.COMMON_SHARE}} он передаст Вам.</p>
 
       {{if player.group.treatment == 2}}
       <p></p>
-      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}},
+      что означает, что <b> у него есть {{other_player_inc_endowment}}</b></p>
       {{endif}}
 
       {{if player.group.treatment == 1}}
@@ -40,6 +42,8 @@
       <p>Другой участник решил узнать Ваше финансовое положение перед тем,
           как принять решение о том, сколько очков передать Вам.</p>
       {{endif}}
+
+
     
 
 

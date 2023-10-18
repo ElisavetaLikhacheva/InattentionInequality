@@ -65,6 +65,13 @@ SESSION_CONFIGS = [
         num_demo_participants=2,
         default_treatment=6,
     ),
+    dict(
+        name='treat_7',
+        display_name='Treatment 7 (IA)',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=2,
+        default_treatment=7,
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -76,7 +83,9 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.01, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ['financial_conditions'] #here u can gige through apps
+PARTICIPANT_FIELDS = ['financial_conditions',
+                      'num_financial_conditions',
+                      ] #here u can gige through apps
 SESSION_FIELDS = []
 
 # ISO-639 code

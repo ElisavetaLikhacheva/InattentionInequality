@@ -14,17 +14,19 @@
       </p>
 
       <div class="alert alert-secondary">
-            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}}
-        </div>
+            Напоминаем, Ваше финансовое положение: {{player.participant.financial_conditions}},
+          что означает, что <b> у Вас есть {{player.inc_endowment}} </b>
+      </div>
       {{if player.group.treatment == 2}}
       <p>По условиям задания, другой участник в вашей паре проинформирован о Вашем финансовом положении.</p>
       {{endif}}
       
-      <p>Вам необходимо определить, сколько из {{C.ENDOWMENT}} Вы хотите передать участнику Б.</p>
+      <p>Вам необходимо определить, сколько из {{C.COMMON_SHARE}} Вы хотите передать участнику Б.</p>
 
-      {{if player.group.treatment == 2 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
-      <p></p>
-      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}}</p>
+      {{if player.group.treatment == 2 or player.group.treatment == 6 or player.group.field_maybe_none('check_info') or  player.group.field_maybe_none('avoid_info') == 0}}
+
+      <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}},
+      что означает, что <b> у него есть {{other_player_inc_endowment}}</b></p>
       {{endif}}
 
       {{if player.group.treatment == 1}}
@@ -44,7 +46,11 @@
       <p>Другой участник НЕ знает Ваше финансовое положение.</p>
       {{endif}}
 
-      {{if player.group.treatment == 6 and player.group.field_maybe_none('check_info') == 1}}
+      {{if player.group.treatment == 6}}
+      <p>Другой участник НЕ знает Ваше финансовое положение.</p>
+      {{endif}}
+
+      {{if player.group.treatment == 7 and player.group.field_maybe_none('check_info') == 1}}
       <p>Другой участник НЕ знает Ваше финансовое положение.</p>
       {{endif}}
 

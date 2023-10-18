@@ -12,9 +12,10 @@ class C(BaseConstants):
     NAME_IN_URL = 'dictator'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 1
-    ENDOWMENT = cu(100)
+    ENDOWMENT = cu(10)
     DICTATOR_ROLE = 'A'
     RECIPIENT_ROLE = 'Б'
+    COMMON_SHARE = cu(300)
 
     Q_GENDER = [
         [1, 'Мужской'],
@@ -257,8 +258,8 @@ class C(BaseConstants):
 def set_payoffs(group):
     dictator = group.get_player_by_role('A')
     recipient = group.get_player_by_role('Б')
-    dictator.payoff = C.ENDOWMENT - group.share
-    recipient.payoff = group.share
+    dictator.payoff = dictator.inc_endowment + C.COMMON_SHARE - group.share
+    recipient.payoff = recipient.inc_endowment + group.share
 
 
 def other_player(player):
@@ -289,12 +290,16 @@ def big5_calculation(first, second):
     return 3 + (first - second) / 2
 
 
+#def share_max(group):
+#    return group.get_player_by_role('A').inc_endowment
+
+
 class Subsession(BaseSubsession):
     pass
 
 
 class Group(BaseGroup):
-    share = models.IntegerField(min=0, max=C.ENDOWMENT, label='Сколько очков Вы передадите участнику Б?')
+    share = models.CurrencyField(min=0, max=C.COMMON_SHARE, label='Сколько очков Вы передадите участнику Б?')
     treatment = models.IntegerField()
 
     check_info = models.BooleanField(label='Хотите ли Вы узнать эту информацию?')
@@ -303,6 +308,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     other_player_financial_conditions = models.IntegerField()
+    inc_endowment = models.CurrencyField()
 
     education = models.StringField(
         label='Укажите наивысшую оконченную ступень образования, по которой Вы имеете диплом.',
@@ -593,7 +599,7 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        treatment = itertools.cycle([1, 2, 3, 4, 5, 6])
+        treatment = itertools.cycle([1, 2, 3, 4, 5, 6, 7])
         subsession = group.subsession
         players = subsession.get_players()
         for p in players:
@@ -601,6 +607,19 @@ class WP1(WaitPage):
                 p.group.treatment = subsession.session.config['default_treatment']
             else:
                 p.group.treatment = next(treatment)
+            # if p.role == C.DICTATOR_ROLE
+            if p.participant.num_financial_conditions < 3:
+                p.inc_endowment = C.ENDOWMENT * p.participant.num_financial_conditions
+            elif p.participant.num_financial_conditions == 3:
+                p.inc_endowment = 50
+            elif p.participant.num_financial_conditions == 4:
+                p.inc_endowment = 100
+            elif p.participant.num_financial_conditions == 5:
+                p.inc_endowment = 350
+            else:
+                p.inc_endowment = 500
+
+
 
 
 class WP2(WaitPage):
@@ -625,7 +644,7 @@ class DetectionAvoid(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.role == C.DICTATOR_ROLE and player.group.treatment == 6
+        return player.role == C.DICTATOR_ROLE and player.group.treatment == 7
 
 
 class WP3(WaitPage):
@@ -643,8 +662,21 @@ class MainDictatorDecision(Page):
     @staticmethod
     def vars_for_template(player: Player):
         other_player_financial_conditions = other_player(player).participant.financial_conditions
+        other_player_num_financial_conditions = other_player(player).participant.num_financial_conditions
+        if other_player_num_financial_conditions < 3:
+            other_player_inc_endowment = C.ENDOWMENT * other_player_num_financial_conditions
+        elif other_player_num_financial_conditions == 3:
+            other_player_inc_endowment = 50
+        elif other_player_num_financial_conditions == 4:
+            other_player_inc_endowment = 100
+        elif other_player_num_financial_conditions == 5:
+            other_player_inc_endowment = 350
+        else:
+            other_player_inc_endowment = 500
 
         return dict(other_player_financial_conditions=other_player_financial_conditions,
+                    other_player_num_financial_conditions=other_player_num_financial_conditions,
+                    other_player_inc_endowment=other_player_inc_endowment
                     )
 
 class Receiver_main_decision(Page):
@@ -655,8 +687,12 @@ class Receiver_main_decision(Page):
     @staticmethod
     def vars_for_template(player: Player):
         other_player_financial_conditions = other_player(player).participant.financial_conditions
+        other_player_num_financial_conditions = other_player(player).participant.num_financial_conditions
+        other_player_inc_endowment = C.ENDOWMENT * other_player_num_financial_conditions
 
         return dict(other_player_financial_conditions=other_player_financial_conditions,
+                    other_player_num_financial_conditions=other_player_num_financial_conditions,
+                    other_player_inc_endowment=other_player_inc_endowment
                     )
 
 

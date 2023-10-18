@@ -15,14 +15,15 @@
     <div class="card-body">
         <p class="card-text"> Вы были участником {{player.role}}.</p>
         {{if player.role == C.DICTATOR_ROLE}}
-        Из {{C.ENDOWMENT}} Вы передали участнику Б {{group.share}}.
+        Из {{C.COMMON_SHARE}} Вы передали участнику Б {{group.share}}.
         {{else}}
-        Участник А передал Вам {{player.payoff}}.
+        Участник А передал Вам {{group.share}}.
         {{endif}}
 
         <p></p>
 
-        <p class="alert alert-primary">Итого, <b>ваш бонус</b> за Этап 2 составил <b> {{player.payoff}}</b>.</p>
+        <p class="alert alert-primary">Итого, <b>ваш бонус</b> за Этап 2 составил <b> {{player.payoff}}</b>,
+            включая Ваши начальные {{player.inc_endowment}}.</p>
     </div>
 </div>
 
