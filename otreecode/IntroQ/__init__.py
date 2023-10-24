@@ -43,21 +43,21 @@ class Player(BasePlayer):
         label='В каком году Вы родились?',
         min=1900,
         max=2022,
-        initial=1999,
+        #initial=1999,
         # blank=True
     )
     gender = models.StringField(
         label='Пожалуйста, укажите Ваш пол.',
         choices=C.Q_GENDER,
         widget=widgets.RadioSelectHorizontal,
-        initial=1,
+        #initial=1,
         # blank=True
     )
     financial_conditions = models.IntegerField(
         label='Пожалуйста, выберите вариант ответа, который наиболее точно описывает финансовое положение Вашей семьи, не залезая в долги и не беря кредитов.',
         choices=C.Q_FINANCIAL_CONDITIONS,
         widget=widgets.RadioSelect,
-        initial=1,
+        #initial=1,
     )
 
     num_failed_attempts = models.IntegerField(initial=0)
