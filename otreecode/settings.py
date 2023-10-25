@@ -3,15 +3,22 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='full_bot',
-        display_name='random (bot), 20 players',
+        name='full_treatments',
+        display_name='All treatments, without bots, 20 p',
+        app_sequence=['IntroQ', 'dictator'],
+        num_demo_participants=20,
+        #use_browser_bots=True
+    ),
+    dict(
+        name='full_treatments_bots',
+        display_name='All treatments, with bots, 20 p',
         app_sequence=['IntroQ', 'dictator'],
         num_demo_participants=20,
         use_browser_bots=True
     ),
     dict(
         name='full_bot_4',
-        display_name='random (bot), 4 players',
+        display_name='All treatments, with bots, 4 p',
         app_sequence=['IntroQ', 'dictator'],
         num_demo_participants=4,
         use_browser_bots=True
