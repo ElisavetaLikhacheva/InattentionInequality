@@ -118,7 +118,7 @@ class UnderstandingDG(Page):
 
     @staticmethod
     def error_message(player: Player, values):
-        solutions = dict(quiz1=250, quiz2=False, quiz3=300)
+        solutions = dict(quiz1=100, quiz2=False, quiz3=150)
 
         errors = {name: 'Неверный ответ' for name in solutions if values[name] != solutions[name]}
         if errors:
@@ -126,22 +126,22 @@ class UnderstandingDG(Page):
             return errors
 
 
-class PriorBeliefs(Page):
-    form_model = 'player'
-    form_fields = [
-        'prior_1',
-        'prior_2',
-        'prior_3',
-        'prior_4',
-        'prior_5',
-        'prior_6',
-    ]
-
-    @staticmethod
-    def error_message(player: Player, values):
-        # since 'values' is a dict, you could also do sum(values.values())
-        if values['prior_1'] + values['prior_2'] + values['prior_3'] + values['prior_4'] + values['prior_5'] + values['prior_6'] != 100:
-            return 'Числа должны в сумме давать100'
+# class PriorBeliefs(Page):
+#     form_model = 'player'
+#     form_fields = [
+#         'prior_1',
+#         'prior_2',
+#         'prior_3',
+#         'prior_4',
+#         'prior_5',
+#         'prior_6',
+#     ]
+#
+#     @staticmethod
+#     def error_message(player: Player, values):
+#         # since 'values' is a dict, you could also do sum(values.values())
+#         if values['prior_1'] + values['prior_2'] + values['prior_3'] + values['prior_4'] + values['prior_5'] + values['prior_6'] != 100:
+#             return 'Числа должны в сумме давать 100'
 
 
 page_sequence = [
@@ -149,5 +149,5 @@ page_sequence = [
     IntroQ,
     InstructionDG,
     UnderstandingDG,
-    PriorBeliefs,
+    #PriorBeliefs,
 ]

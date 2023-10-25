@@ -15,7 +15,7 @@ class C(BaseConstants):
     ENDOWMENT = cu(10)
     DICTATOR_ROLE = 'A'
     RECIPIENT_ROLE = 'Б'
-    COMMON_SHARE = cu(300)
+    COMMON_SHARE = cu(150)
 
     Q_GENDER = [
         [1, 'Мужской'],
@@ -290,8 +290,20 @@ def big5_calculation(first, second):
     return 3 + (first - second) / 2
 
 
-#def share_max(group):
-#    return group.get_player_by_role('A').inc_endowment
+def endowment_ecu(num_financial_conditions):
+    if num_financial_conditions == 1:
+        inc_endowment = cu(5)
+    elif num_financial_conditions == 2:
+        inc_endowment = cu(15)
+    elif num_financial_conditions == 3:
+        inc_endowment = cu(25)
+    elif num_financial_conditions == 4:
+        inc_endowment = cu(50)
+    elif num_financial_conditions == 5:
+        inc_endowment = cu(180)
+    else:
+        inc_endowment = cu(250)
+    return inc_endowment
 
 
 class Subsession(BaseSubsession):
@@ -608,16 +620,19 @@ class WP1(WaitPage):
             else:
                 p.group.treatment = next(treatment)
             # if p.role == C.DICTATOR_ROLE
-            if p.participant.num_financial_conditions < 3:
-                p.inc_endowment = C.ENDOWMENT * p.participant.num_financial_conditions
-            elif p.participant.num_financial_conditions == 3:
-                p.inc_endowment = 50
-            elif p.participant.num_financial_conditions == 4:
-                p.inc_endowment = 100
-            elif p.participant.num_financial_conditions == 5:
-                p.inc_endowment = 350
-            else:
-                p.inc_endowment = 500
+            p.inc_endowment = endowment_ecu(p.participant.num_financial_conditions)
+
+
+            # if p.participant.num_financial_conditions < 3:
+            #     p.inc_endowment = C.ENDOWMENT * p.participant.num_financial_conditions
+            # elif p.participant.num_financial_conditions == 3:
+            #     p.inc_endowment = 50
+            # elif p.participant.num_financial_conditions == 4:
+            #     p.inc_endowment = 100
+            # elif p.participant.num_financial_conditions == 5:
+            #     p.inc_endowment = 350
+            # else:
+            #     p.inc_endowment = 500
 
 
 
@@ -663,16 +678,7 @@ class MainDictatorDecision(Page):
     def vars_for_template(player: Player):
         other_player_financial_conditions = other_player(player).participant.financial_conditions
         other_player_num_financial_conditions = other_player(player).participant.num_financial_conditions
-        if other_player_num_financial_conditions < 3:
-            other_player_inc_endowment = C.ENDOWMENT * other_player_num_financial_conditions
-        elif other_player_num_financial_conditions == 3:
-            other_player_inc_endowment = 50
-        elif other_player_num_financial_conditions == 4:
-            other_player_inc_endowment = 100
-        elif other_player_num_financial_conditions == 5:
-            other_player_inc_endowment = 350
-        else:
-            other_player_inc_endowment = 500
+        other_player_inc_endowment = endowment_ecu(other_player_num_financial_conditions)
 
         return dict(other_player_financial_conditions=other_player_financial_conditions,
                     other_player_num_financial_conditions=other_player_num_financial_conditions,
