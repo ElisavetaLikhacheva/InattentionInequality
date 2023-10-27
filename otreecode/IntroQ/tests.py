@@ -13,9 +13,9 @@ class PlayerBot(Bot):
                           financial_conditions=random.randint(1, 9),
                                )
         yield InstructionDG,
-        yield UnderstandingDG, dict(quiz1=90,
+        yield UnderstandingDG, dict(quiz1=100,
                                     quiz2=False,
-                                    quiz3=100)
+                                    quiz3=150)
 
         # # yield Intro, dict(income=random.randint(1, 150))
         #

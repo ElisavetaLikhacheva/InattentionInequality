@@ -321,6 +321,12 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     other_player_financial_conditions = models.IntegerField()
     inc_endowment = models.CurrencyField()
+    design_fairness = models.StringField(
+        label='Как Вы считаете, соответствует ли соотношение очков, которое получили люди с разным финансовом положением, '
+              'распределению доходов в России?',
+        choices=C.Q_4_YES_NO,
+        widget=widgets.RadioSelect
+    )
 
     education = models.StringField(
         label='Укажите наивысшую оконченную ступень образования, по которой Вы имеете диплом.',
@@ -797,6 +803,11 @@ class PoliticalPreferences(Page):
     ]
 
 
+class Design_fairness(Page):
+    form_model = 'player'
+    form_fields = ['design_fairness']
+
+
 class Big5(Page):
     form_model = 'player'
     form_fields = ['big5_1',
@@ -884,6 +895,7 @@ page_sequence = [
     Perception,
     Redistribution,
     PoliticalPreferences,
+    Design_fairness,
     Big5,
     Risk,##
     BackgroundInfo,
