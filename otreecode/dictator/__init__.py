@@ -321,6 +321,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     other_player_financial_conditions = models.IntegerField()
     inc_endowment = models.CurrencyField()
+
     design_fairness = models.StringField(
         label='Как Вы считаете, соответствует ли соотношение очков, которое получили люди с разным финансовом положением, '
               'распределению доходов в России?',
@@ -618,29 +619,14 @@ class WP1(WaitPage):
     @staticmethod
     def after_all_players_arrive(group: Group):
         treatment = itertools.cycle([1, 2, 3, 4, 5, 6, 7])
-        subsession = group.subsession
-        players = subsession.get_players()
-        for p in players:
-            if 'default_treatment' in subsession.session.config:
-                p.group.treatment = subsession.session.config['default_treatment']
-            else:
-                p.group.treatment = next(treatment)
-            # if p.role == C.DICTATOR_ROLE
-            p.inc_endowment = endowment_ecu(p.participant.num_financial_conditions)
+        if 'default_treatment' in group.subsession.session.config:
+            group.treatment = group.subsession.session.config['default_treatment']
+        else:
+            group.treatment = next(treatment)
 
-
-            # if p.participant.num_financial_conditions < 3:
-            #     p.inc_endowment = C.ENDOWMENT * p.participant.num_financial_conditions
-            # elif p.participant.num_financial_conditions == 3:
-            #     p.inc_endowment = 50
-            # elif p.participant.num_financial_conditions == 4:
-            #     p.inc_endowment = 100
-            # elif p.participant.num_financial_conditions == 5:
-            #     p.inc_endowment = 350
-            # else:
-            #     p.inc_endowment = 500
-
-
+        for p in group.get_players():
+            num_financial_conditions = p.participant.num_financial_conditions
+            p.inc_endowment = endowment_ecu(num_financial_conditions)
 
 
 class WP2(WaitPage):
@@ -700,11 +686,11 @@ class Receiver_main_decision(Page):
     def vars_for_template(player: Player):
         other_player_financial_conditions = other_player(player).participant.financial_conditions
         other_player_num_financial_conditions = other_player(player).participant.num_financial_conditions
-        other_player_inc_endowment = C.ENDOWMENT * other_player_num_financial_conditions
+        # other_player_inc_endowment = endowment_ecu(other_player_num_financial_conditions)
 
         return dict(other_player_financial_conditions=other_player_financial_conditions,
                     other_player_num_financial_conditions=other_player_num_financial_conditions,
-                    other_player_inc_endowment=other_player_inc_endowment
+                    # other_player_inc_endowment=other_player_inc_endowment
                     )
 
 
