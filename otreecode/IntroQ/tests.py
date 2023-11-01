@@ -10,7 +10,7 @@ class PlayerBot(Bot):
         yield InstructionGeneral,
         yield IntroQ, dict(year_of_birth=random.randint(1900, 2022),
                           gender=random.choice([1, 2]),
-                          financial_conditions=random.randint(1, 9),
+                          financial_conditions=random.randint(1, 6),
                                )
         yield InstructionDG,
         yield UnderstandingDG, dict(quiz1=100,

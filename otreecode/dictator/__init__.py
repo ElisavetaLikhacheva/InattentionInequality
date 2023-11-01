@@ -736,7 +736,7 @@ class Perception(Page):
                    'poor_10',
                    'rich_10',
                    'percent_below',
-                   'income'
+                   # 'income'
                    ]
 
 
