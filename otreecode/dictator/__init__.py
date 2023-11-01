@@ -618,11 +618,21 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
+        # subsession = group.subsession
+
         treatment = itertools.cycle([1, 2, 3, 4, 5, 6, 7])
-        if 'default_treatment' in group.subsession.session.config:
-            group.treatment = group.subsession.session.config['default_treatment']
-        else:
-            group.treatment = next(treatment)
+        # if 'default_treatment' in group.subsession.session.config:
+        #     group.treatment = group.subsession.session.config['default_treatment']
+        # else:
+        #     group.treatment = next(treatment)
+
+        for p in group.subsession.get_players():
+            if 'default_treatment' in group.subsession.session.config:
+                p.group.treatment = group.subsession.session.config['default_treatment']
+            else:
+                p.group.treatment = next(treatment)
+
+        # subsession.num_groups_created += 1
 
         for p in group.get_players():
             num_financial_conditions = p.participant.num_financial_conditions
@@ -686,11 +696,11 @@ class Receiver_main_decision(Page):
     def vars_for_template(player: Player):
         other_player_financial_conditions = other_player(player).participant.financial_conditions
         other_player_num_financial_conditions = other_player(player).participant.num_financial_conditions
-        # other_player_inc_endowment = endowment_ecu(other_player_num_financial_conditions)
+        other_player_inc_endowment = endowment_ecu(other_player_num_financial_conditions)
 
         return dict(other_player_financial_conditions=other_player_financial_conditions,
                     other_player_num_financial_conditions=other_player_num_financial_conditions,
-                    # other_player_inc_endowment=other_player_inc_endowment
+                    other_player_inc_endowment=other_player_inc_endowment
                     )
 
 
