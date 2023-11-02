@@ -16,6 +16,7 @@ class C(BaseConstants):
     DICTATOR_ROLE = 'A'
     RECIPIENT_ROLE = 'Б'
     COMMON_SHARE = cu(150)
+    TREATMENT = [1, 2, 3, 4, 5, 6, 7]
 
     Q_GENDER = [
         [1, 'Мужской'],
@@ -307,7 +308,7 @@ def endowment_ecu(num_financial_conditions):
 
 
 class Subsession(BaseSubsession):
-    pass
+    num_groups_created = models.IntegerField(initial=0)
 
 
 class Group(BaseGroup):
@@ -618,21 +619,23 @@ class WP1(WaitPage):
 
     @staticmethod
     def after_all_players_arrive(group: Group):
-        # subsession = group.subsession
+        # treatment = itertools.cycle([1, 2, 3, 4, 5, 6, 7])
+        # for p in group.subsession.get_players():
+        #     if 'default_treatment' in group.subsession.session.config:
+        #         p.group.treatment = group.subsession.session.config['default_treatment']
+        #     else:
+        #         if p.role == C.DICTATOR_ROLE:
+        #             p.group.treatment = next(treatment)
 
-        treatment = itertools.cycle([1, 2, 3, 4, 5, 6, 7])
-        # if 'default_treatment' in group.subsession.session.config:
-        #     group.treatment = group.subsession.session.config['default_treatment']
-        # else:
-        #     group.treatment = next(treatment)
-
-        for p in group.subsession.get_players():
+        subsession = group.subsession
+        idx = subsession.num_groups_created % len(C.TREATMENT)
+        treatment = C.TREATMENT[idx]
+        for p in group.get_players():
             if 'default_treatment' in group.subsession.session.config:
                 p.group.treatment = group.subsession.session.config['default_treatment']
             else:
-                p.group.treatment = next(treatment)
-
-        # subsession.num_groups_created += 1
+                p.group.treatment = int(treatment)
+        subsession.num_groups_created += 1
 
         for p in group.get_players():
             num_financial_conditions = p.participant.num_financial_conditions
