@@ -65,8 +65,8 @@ class Player(BasePlayer):
 
     quiz1 = models.IntegerField(label='Предположим, участник А решил оставить 50 очков себе. '
                                       'Сколько очков будет передано участнику Б?')
-    quiz2 = models.BooleanField(label='Может ли участник Б выбрать передать очки участнику А?')
-    quiz3 = models.IntegerField(label='Сколько очков участник А может распределить между собой и участником Б?')
+    quiz2 = models.BooleanField(label='Может ли участник Б передать очки участнику А?')
+    quiz3 = models.IntegerField(label='Какое минимальное число очков участник А может передать участнику Б?')
 
     prior_1 = models.PositiveIntegerField(label='1 — Денег не хватает даже на питание')
     prior_2 = models.PositiveIntegerField(label='2 — На питание денег хватает, но не хватает на покупку одежды и обуви')
@@ -118,7 +118,7 @@ class UnderstandingDG(Page):
 
     @staticmethod
     def error_message(player: Player, values):
-        solutions = dict(quiz1=100, quiz2=False, quiz3=150)
+        solutions = dict(quiz1=100, quiz2=False, quiz3=0)
 
         errors = {name: 'Неверный ответ' for name in solutions if values[name] != solutions[name]}
         if errors:
