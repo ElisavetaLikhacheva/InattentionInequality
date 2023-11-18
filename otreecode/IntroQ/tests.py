@@ -15,7 +15,7 @@ class PlayerBot(Bot):
         yield InstructionDG,
         yield UnderstandingDG, dict(quiz1=100,
                                     quiz2=False,
-                                    quiz3=0)
+                                    quiz3=150)
 
         # # yield Intro, dict(income=random.randint(1, 150))
         #
