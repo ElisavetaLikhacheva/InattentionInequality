@@ -84,7 +84,7 @@ class PlayerBot(Bot):
                                          important_democracy=random.randint(1, 10),
                                          # Russia_democracy=random.randint(1, 10),
                                          )
-        yield Design_fairness, dict(design_fairness=random.randint(1, 4))
+
         yield Big5, dict(
             big5_1=random.randint(1, 5),
             big5_2=random.randint(1, 5),
@@ -124,13 +124,19 @@ class PlayerBot(Bot):
                                    father_education=random.randint(1, 7),
                                    region=random.randint(1, 19),
                                    regional_income=random.randint(1, 1200),
-                                   place_living_now=random.randint(1, 6),
-                                   place_living_sensible_years=random.randint(1, 6),
+                                   place_living_now=random.randint(1, 5),
+                                   place_living_sensible_years=random.randint(1, 5),
                                    is_occupied=random.randint(0, 1),
                                    self_employed=random.randint(0, 1),
                                    occupation=random.randint(1, 10),
                                    charity=random.randint(1, 4)
                                    )
+        if self.player.role == C.DICTATOR_ROLE:
+            yield Design_fairness, dict(design_fairness=random.randint(1, 4),
+            dictator_reasons="none, really")
+        else:
+            yield Design_fairness, dict(design_fairness=random.randint(1, 4))
+
         # yield LastQ,
         yield DGDecision,
         yield Submission(TheEnd, check_html=False)

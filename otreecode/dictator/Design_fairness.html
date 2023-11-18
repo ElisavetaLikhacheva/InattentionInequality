@@ -50,8 +50,11 @@
             </table>
         </div>
 
-        <p>{{formfields}}</p>
+        <p>{{formfield 'design_fairness'}}</p>
 
+         {{if player.role == C.DICTATOR_ROLE}}
+            <p>{{formfield 'dictator_reasons'}}</p>
+         {{endif}}
 
 
     </div>

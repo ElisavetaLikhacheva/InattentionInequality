@@ -89,7 +89,7 @@ class C(BaseConstants):
     ]
     Q_PLACE_LIVING = [
         [1, 'Крупный город с населением больше 1 миллиона человек'],
-        [2, 'Город с населением от 250 тысяч человек до миллиона'],
+        [2, 'Город с населением от 250 тысяч человек до 1 миллиона'],
         [3, 'Город с населением от 50 до 250 тысяч человек'],
         [4, 'Город с населением от 10 до 50 тысяч человек'],
         [5, 'Населенный пункт до 10 тысяч человек'],
@@ -230,9 +230,9 @@ class C(BaseConstants):
         [76, 'Ярославская область'],
     ]
     Q_BENEFITS = [
-        [1, 'Выигрываю'],
+        [1, 'Проигрываю'],
         [2, 'Безразлично'],
-        [3, 'Проигрываю']
+        [3, 'Выигрываю']
     ]
     Q_CHURCH_ATTENDANCE = [
         [1, 'Вообще не бываю'],
@@ -316,8 +316,10 @@ class Group(BaseGroup):
     share = models.CurrencyField(min=0, max=C.COMMON_SHARE, label='Сколько очков Вы передадите участнику Б?')
     treatment = models.IntegerField()
 
-    check_info = models.BooleanField(label='Хотите ли Вы узнать эту информацию?')
-    avoid_info = models.BooleanField(label='Хотите ли Вы пропустить эту информацию?')
+    check_info = models.BooleanField(label='Вы хотите получить информацию о финансовом положении другого '
+                                           'участника?')
+    avoid_info = models.BooleanField(label='Вы хотите НЕ получать информацию о финансовом положении '
+                                           'другого участника?')
 
 
 class Player(BasePlayer):
@@ -329,6 +331,10 @@ class Player(BasePlayer):
               'распределению доходов в России?',
         choices=C.Q_4_YES_NO,
         widget=widgets.RadioSelect
+    )
+
+    dictator_reasons = models.StringField(initial='',blank=True,
+        label='Чем Вы руководствовались, определяя сумму, которую Вы передали участнику Б?',
     )
 
     education = models.StringField(
@@ -538,12 +544,15 @@ class Player(BasePlayer):
         label='Как Вы считаете, каков среднемесячный доход жителей Вашего региона? Напишите, пожалуйста, Вашу оценку (в рублях в месяц)',
     )
     place_living_now = models.StringField(
-        label='Какая из указанных категорий лучше всего описывает место, где Вы сейчас проживаете?',
+        label='Какая из указанных категорий населенных пунктов соответствует тому пункту, в котором Вы '
+              'сейчас '
+              'проживаете?',
         choices=C.Q_PLACE_LIVING,
         widget=widgets.RadioSelect,
     )
     place_living_sensible_years = models.StringField(
-        label='Какая из указанных категорий лучше всего описывает место, где Вы проживали в возрасте 16-20 лет?',
+        label='Какая из указанных категорий населенных пунктов соответствует тому пункту, где Вы проживали в '
+              'возрасте 16 лет?',
         choices=C.Q_PLACE_LIVING,
         widget=widgets.RadioSelect,
     )
@@ -808,7 +817,7 @@ class PoliticalPreferences(Page):
 
 class Design_fairness(Page):
     form_model = 'player'
-    form_fields = ['design_fairness']
+    form_fields = ['design_fairness', 'dictator_reasons']
 
 
 class Big5(Page):
@@ -898,10 +907,10 @@ page_sequence = [
     Perception,
     Redistribution,
     PoliticalPreferences,
-    Design_fairness,
     Big5,
     Risk,##
     BackgroundInfo,
+    Design_fairness,
     ### the end of questionnaire
     DGDecision, #should be in the end
     TheEnd,
