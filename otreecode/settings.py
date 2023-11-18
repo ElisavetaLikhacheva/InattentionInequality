@@ -95,6 +95,14 @@ PARTICIPANT_FIELDS = ['financial_conditions',
                       ]
 SESSION_FIELDS = []
 
+ROOMS = [
+    dict(
+        name='econ_lab',
+        display_name='Experimental Economics Lab'
+    ),
+]
+
+
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'ru'
