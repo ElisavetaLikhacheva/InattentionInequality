@@ -1,0 +1,35 @@
+{{ block title }}
+Этап 3 завершен. Благодарим за прохождение анкеты.
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+
+<h3></h3>
+<div class="card">
+    <div class="card-header">
+    Результаты этапа 2
+    </div>
+
+    <div class="card-body">
+        <p class="card-text"> Вы были участником {{player.role}}.</p>
+        {{if player.role == C.DICTATOR_ROLE}}
+        Из {{C.COMMON_SHARE}} Вы передали участнику Б {{group.share}}.
+        {{else}}
+        Участник А передал Вам {{group.share}}.
+        {{endif}}
+
+        <p></p>
+
+        <p class="alert alert-primary">Итого, <b>ваш бонус</b> за Этап 2 составил <b> {{player.payoff}}</b>,
+            включая Ваши начальные {{player.inc_endowment}}.</p>
+
+        <p>Также за прохождение анкеты до конца Вам дополнительно начислены 50 очков.</p>
+    </div>
+</div>
+
+    {{ next_button }}
+{{ endblock }}
+
+

@@ -1,0 +1,35 @@
+{{ block title }}
+{{if player.round_number == 1}} Поздравляем! Вы завершили 1 этап. {{else}} {{endif}}
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+
+        <div class="card-header"> Инструкция к этапу 2 </div>
+        <div class="card-body">
+            <b>
+                Пожалуйста, внимательно прочитайте инструкцию ниже.
+            </b>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">На 2 этапе Вы будете объединены в пару с другим участником
+                    случайным образом.</li>
+                <li class="list-group-item">Одному из Вас случайным образом будет назначена роль участника "А", другому — роль участника "Б".
+                    Участнику "А" будет предоставлено {{C.ENDOWMENT}}.</li>
+                <li class="list-group-item">Участнику "А" предстоит выбрать, сколько из {{C.ENDOWMENT}} передать игроку "Б",
+                    а сколько — оставить себе.</li>
+                <li class="list-group-item">Каждое очко в конце игры будет переведено в рубли в пропорции:
+                    1 очко = 1 рубль.</li>
+                <li class="list-group-item"></li>
+            </ul>
+    </div>
+</div>
+
+
+
+
+    {{ next_button }}
+{{ endblock }}
+
+

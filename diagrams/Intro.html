@@ -1,0 +1,17 @@
+{{ block title }}
+Добрый день!
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+    <div class="card-body">
+        <p class="p_indent">Вы принимаете участие в исследовании, состоящем из 3 этапов.
+            В рамках каждого из них Вам предстоит ответить на несколько вопросов. </p>
+    </div>
+</div>
+
+    {{ next_button }}
+
+{{ endblock }}

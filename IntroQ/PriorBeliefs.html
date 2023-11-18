@@ -1,0 +1,41 @@
+{{ block title }}
+    Поздравляем, Вы ответили на все вопросы правильно!
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-primary">Пожалуйста, определите сколько из 100% людей обладают определенным финансовым состоянием.
+            Для этого в каждой ячейке напишите целое число от 0 до 100.
+            <b>Помните, что итоговая сумма должна равняться 100.</b></div>
+
+        {{ formfields }}
+        <p>
+            <b>Итого: <span id="total"></span></b>
+        </p>
+    </div>
+</div>
+
+
+<script>
+    let inputlist = document.getElementsByTagName('input');
+    let totalDisplay = document.getElementById('total');
+
+
+    function updateSum() {
+        let total = 0;
+        for (let input of inputlist) {
+            total += parseInt(input.value || 0);
+        }
+        totalDisplay.innerText = total;
+    }
+
+    for (let input of inputlist) {
+        input.oninput = updateSum;
+    }
+</script>
+    {{ next_button }}
+{{ endblock }}
+
+

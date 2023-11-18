@@ -1,0 +1,58 @@
+{{ block title }}
+    Поздравляем, Вы завершили Этап 1. Начинается Этап 2.
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{static 'global/main.css'}}">
+
+<div class="card">
+        <div class="card-body">
+            <p class="alert alert-primary">
+                Пожалуйста, внимательно прочитайте инструкцию ниже. На <b> следующей странице</b> Вам предстоит
+                <b> ответить на несколько вопросов,</b> основанных на инструкции.
+            </p>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">На 2 этапе Вы будете объединены в пару с другим участником
+                    случайным образом.</li>
+                <li class="list-group-item"> Каждому участнику в конце будет дополнительно начислено 50 очков за участие. </li>
+                <li class="list-group-item">Одному из вас случайным образом будет назначена роль участника А,
+                    другому — роль участника Б.</li>
+
+                <li class="list-group-item">В начале 2 этапа каждый участник
+                    получает количество очков,
+                    пропорциональное его финансовому положению, которое он указал в предыдущем вопросе.
+                    Таким образом, чем лучше Ваше финансовое положение, тем
+                    больше очков Вы получаете. То же самое относится к
+                    другому участнику из вашей пары.
+                </li>
+
+                <li class="list-group-item">Кроме этой суммы, участник А
+                    дополнительно получает 150 очков. Участник А должен
+                    принять решение, сколько из этих 150 дополнительных очков
+                    передать участнику Б, а сколько оставить себе. Передать
+                    можно любое целое число очков k, от 0 до 150, на
+                    усмотрение участника А, оставив 150-k себе.</li>
+                <li class="list-group-item">В конце исследования каждое очко у
+                    каждого участника будет переведено в доллары в пропорции:
+                    100 очков = 1 доллар.</li>
+                <li class="list-group-item">Ниже правила проиллюстрированы
+                    графически. Ознакомьтесь с ними и нажмите Далее
+                    внизу страницы.</li>
+                <li class="list-group-item">
+                    <img src="https://www.dropbox.com/scl/fi/i3tf5scaz0c17t5rr8l92/step1.png?rlkey=3e3p4dwux58ae6fpoxuwbwvsh&raw=1" class="card-img-top">
+                </li>
+                <li class="list-group-item">
+                    <img src="https://www.dropbox.com/scl/fi/dzt1l5u45p3n333hr17q8/step2.png?rlkey=zi3en4k49z9hzu2bcagta8fr4&raw=1" class="card-img-top">
+                </li>
+                <li class="list-group-item">
+                    <img src="https://www.dropbox.com/scl/fi/cj7m89wzi3kw2x2005oly/step3.png?rlkey=scnwzoowkrdzs1pkfwpko9ct4&raw=1" class="card-img-top">
+                </li>
+            </ul>
+    </div>
+</div>
+
+    {{ next_button }}
+{{ endblock }}
+
+
