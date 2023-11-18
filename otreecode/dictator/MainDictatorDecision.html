@@ -36,6 +36,13 @@
       что означает, что <b> у него есть {{other_player_inc_endowment}}</b></p>
       {{endif}}
 
+      {{if player.group.treatment == 1}}
+      <p class="alert alert-primary">Вы не знаете финансовое положение другого участника.</p>
+      {{endif}}
+
+      {{if player.group.field_maybe_none('check_info') == 0 or  player.group.field_maybe_none('avoid_info')}}
+      <p class="alert alert-primary">Вы решили не узнавать финансовое положение другого участника.</p>
+      {{endif}}
 
 
       <p>Вам необходимо определить, сколько из {{C.COMMON_SHARE}} Вы хотите передать участнику Б.</p>

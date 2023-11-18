@@ -24,7 +24,11 @@
           <p></p>
           <p class="alert alert-primary"> Его финансовое положение: {{other_player_financial_conditions}},
           что означает, что <b> у него есть {{other_player_inc_endowment}}</b></p>
+      {{else}}
+        <p class="alert alert-primary">Вы не знаете финансовое положение другого участника.</p>
       {{endif}}
+
+
 
 
       <p> Сейчас участник А определяет, сколько из {{C.COMMON_SHARE}} он передаст Вам.</p>
